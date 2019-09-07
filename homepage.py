@@ -5,6 +5,7 @@ Created on Thu Aug 15 22:33:24 2019
 @author: User
 """
 import tkinter as tk
+from tkinter import ttk
 import time
 from weather2 import *
 
@@ -24,7 +25,7 @@ class Homepage():
         self.date_label.place(x=self.root_width//5,y = self.root_height//6+70)
         
         #Label of city_name
-        self.cityName_label=tk.Label(self.root, text=weather.print_city(), font=("Arial",12))
+        self.cityName_label=ttk.Label(self.root, text=weather.print_city(), font=("Arial",12))
         self.cityName_label.place(x=self.root_width//5,y = self.root_height//6*4)
         
         #Label of city day raining rate

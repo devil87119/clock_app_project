@@ -9,10 +9,11 @@ import tkinter as tk
 #from test_GUI import *
 from homepage import *
 from weather2 import *
+from alarm import *
 import time
 import threading
 
-now_page = -1
+now_page = 0
 count=0
 Pages = [1, 0, 0, 0, 0, 0, 0, 0]
 
@@ -25,16 +26,18 @@ class Display:
         self.root.geometry(str(self.root_width)+"x"+str(self.root_height))
         self.weather = Weather()
         self.homepage = Homepage(self.root,self.root_height,self.weather)
-        self.toolbar = Toolbar(self.root,self.homepage, self.root_height)
+        self.alarm = Alarm(self.root,self.root_height)
+        self.toolbar = Toolbar(self.root,self.homepage, self.alarm, self.root_height)
     
 
 class Toolbar():
-    def __init__(self, root, homepage, root_height):   
+    def __init__(self, root, homepage, alarm, root_height):   
         #set button x,y 
         self.button_X = 0
         self.root_height = root_height
         self.root = root
         self.homepage = homepage
+        self.alarm = alarm
     
         #toolbar button
         self.Main_page=tk.Button(root, text="MAIN", command=lambda: self.switch_page(0), width=6, height=2)
@@ -48,8 +51,6 @@ class Toolbar():
         self.show_button=tk.Button(root, text="<", command=self.clickOK)
         self.test_label=tk.Label(root, text="<", font=("Arial",12))
         
-        #測試
-        #self.test_label.pack(side='bottom')
         
         #buuton position
         '''self.Main_page.place(x=self.button_X,y = 1)
@@ -93,8 +94,15 @@ class Toolbar():
             return
         if(now_page == 0):
             self.homepage.hide_homepage()
+        if(now_page == 3):
+            self.alarm.hide_alarm()
+            
         if(page_ID == 0):
             self.homepage.show_homepage()
+        if(page_ID == 3):
+            self.alarm.show_alarm()
+            
+        now_page = page_ID
             
             
     def clickOK(self):
@@ -130,6 +138,7 @@ class Toolbar():
         
     def test(self):
         self.test_label.config(text=str(count)+"+"+str(now_page))
+        self.test_label.pack(side='bottom')
         
             
         

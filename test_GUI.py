@@ -32,7 +32,6 @@ def Animation():
         #label.config(text="GG")'''
 
 display = Display()
-
 #label=tk.Label(display.root, text="Hello World!", font=("Arial",12))
 
 #GG=tk.Button(display.root, text="sh", command=clickOK, width=5, height=2)
@@ -40,7 +39,7 @@ display = Display()
 #toolBar_Animation()
 #toolBar_Animation()  
 
-#label.pack(side='bottom')
+#label 
 
 
 display.root.mainloop()
