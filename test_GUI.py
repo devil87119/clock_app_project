@@ -41,7 +41,6 @@ display = Display()
 
 #label 
 
-
 display.root.mainloop()
 
 

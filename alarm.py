@@ -10,11 +10,12 @@ from tkinter import ttk
 import time
 
 class Alarm:
-    def __init__(self, root, root_height):
+    def __init__(self, root, main_frame, root_height):
         #page size
         self.root = root
         self.root_height = root_height
         self.root_width = int(self.root_height/5.1*7.6)
+        self.main_frame = main_frame
         
         #alarm attribute
         self.alarm_activate = [0, 0, 0, 0, 0, 0]#0 : 關閉,  1: 啟動
@@ -31,7 +32,7 @@ class Alarm:
         self.now_detail_alarmID = 0
                 
         #alarm 1~6 frame
-        self.alarm_frame = ttk.Frame(self.root)
+        self.alarm_frame = ttk.Frame(self.main_frame)
         self.alarm_frame.pack(side='bottom', fill=tk.Y)
         
         #alarm 1~6 frame
@@ -64,11 +65,19 @@ class Alarm:
         
         #detail of alarm
         ttk.Style().configure('Font.TLabelframe.Label', font = '25')#, foreground = "red"
-        self.detail_frame = ttk.LabelFrame(self.root, text = "".join(self.alarm_Name[0]), borderwidth=2, relief="groove", style = "Font.TLabelframe")#, highlightcolor="green", highlightthickness=5
-        self.detail_frame.pack(side='right')
+        self.detail_frame = ttk.LabelFrame(self.main_frame, text = "".join(self.alarm_Name[0]), borderwidth=2, relief="groove", style = "Font.TLabelframe")#, highlightcolor="green", highlightthickness=5
+        self.detail_frame.pack(side='left')
+        
+        #left detial frame
+        self.left_frame = ttk.Frame(self.detail_frame, borderwidth=2, relief="groove")        
+        self.left_frame.pack(side = 'left')
+        
+        #Right detial frame
+        self.right_frame = ttk.Frame(self.detail_frame, borderwidth=2, relief="groove")        
+        self.right_frame.pack(side = 'top', padx = (10,10))
         
         #time top button frame
-        self.time_plus_frame = ttk.Frame(self.detail_frame)        
+        self.time_plus_frame = ttk.Frame(self.left_frame)        
         self.time_plus_frame.pack(anchor=tk.NW)
         
         #plus time
@@ -80,11 +89,11 @@ class Alarm:
         self.alarm_plus_hour.pack(side='left', padx = 15)
         
         #set alarm time         
-        self.alarm_set_hour = tk.Label(self.detail_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",25))
+        self.alarm_set_hour = tk.Label(self.left_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",25))
         self.alarm_set_hour.pack(anchor=tk.NW)        
         
         #time bottom button frame
-        self.time_minus_frame = ttk.Frame(self.detail_frame)        
+        self.time_minus_frame = ttk.Frame(self.left_frame)        
         self.time_minus_frame.pack(anchor=tk.NW)
         
         #minus time
@@ -94,44 +103,47 @@ class Alarm:
         self.alarm_minus_hour.pack(side='left', padx = 15)
         
         #鬧鐘持續時間
-        self.ringing_time_label = ttk.Label(self.detail_frame, text = "鬧鐘持續時間", font=("Arial",12))        
+        self.ringing_time_label = ttk.Label(self.left_frame, text = "鬧鐘持續時間", font=("Arial",12))        
         self.ringing_time_label.pack(anchor=tk.NW)
         
         #ringing time frame
-        self.ring_time_frame = ttk.Frame(self.detail_frame)        
+        self.ring_time_frame = ttk.Frame(self.left_frame)        
         self.ring_time_frame.pack(anchor=tk.NW, padx = 10)                
         
         #ringing time option
         self.v = tk.IntVar()
         self.v.set(self.alarm_RingTime[0]) 
-        self.ringtime_1 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[0])+"秒", variable=self.v, value=0, command=lambda: self.set_ring_time(0))
-        self.ringtime_2 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[1])+"秒", variable=self.v, value=1, command=lambda: self.set_ring_time(1))
-        self.ringtime_3 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[2])+"秒", variable=self.v, value=2, command=lambda: self.set_ring_time(2))
-        self.ringtime_4 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[3])+"秒", variable=self.v, value=3, command=lambda: self.set_ring_time(3))
+        self.ringtime_1 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[0])+"s", variable=self.v, value=0, command=lambda: self.set_ring_time(0))
+        self.ringtime_2 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[1])+"s", variable=self.v, value=1, command=lambda: self.set_ring_time(1))
+        self.ringtime_3 = ttk.Radiobutton(self.ring_time_frame, text="1m", variable=self.v, value=2, command=lambda: self.set_ring_time(2))
+        self.ringtime_4 = ttk.Radiobutton(self.ring_time_frame, text="2m", variable=self.v, value=3, command=lambda: self.set_ring_time(3))
         self.ringtime_1.pack(side='left')
         self.ringtime_2.pack(side='left')
         self.ringtime_3.pack(side='left')
         self.ringtime_4.pack(side='left')
         
         #鬧鐘重複次數
-        self.alarm_repeat_label = ttk.Label(self.detail_frame, text = "鬧鐘重複次數", font=("Arial",12))        
+        self.alarm_repeat_label = ttk.Label(self.left_frame, text = "鬧鐘重複次數", font=("Arial",12))        
         self.alarm_repeat_label.pack(anchor=tk.NW)  
         
         #repeat time frame
-        self.repeat_frame = ttk.Frame(self.detail_frame)        
+        self.repeat_frame = ttk.Frame(self.left_frame)        
         self.repeat_frame.pack(anchor=tk.NW, padx = 10)              
         
         #repeat time option
         self.v1 = tk.IntVar()
         self.v1.set(self.alarm_Repeat[0]) 
-        self.repeattime_1 = ttk.Radiobutton(self.repeat_frame, text=" 無  ", variable=self.v1, value=0, command=lambda: self.set_repeat_time(0))
-        self.repeattime_2 = ttk.Radiobutton(self.repeat_frame, text=str(self.alarm_repeat[1])+"次  ", variable=self.v1, value=1, command=lambda: self.set_repeat_time(1))
-        self.repeattime_3 = ttk.Radiobutton(self.repeat_frame, text=str(self.alarm_repeat[2])+"次  ", variable=self.v1, value=2, command=lambda: self.set_repeat_time(2))
+        self.repeattime_1 = ttk.Radiobutton(self.repeat_frame, text=" 無 ", variable=self.v1, value=0, command=lambda: self.set_repeat_time(0))
+        self.repeattime_2 = ttk.Radiobutton(self.repeat_frame, text=str(self.alarm_repeat[1])+"次", variable=self.v1, value=1, command=lambda: self.set_repeat_time(1))
+        self.repeattime_3 = ttk.Radiobutton(self.repeat_frame, text=str(self.alarm_repeat[2])+"次", variable=self.v1, value=2, command=lambda: self.set_repeat_time(2))
         self.repeattime_4 = ttk.Radiobutton(self.repeat_frame, text=" ∞", variable=self.v1, value=3, command=lambda: self.set_repeat_time(3))
         self.repeattime_1.pack(side='left')
         self.repeattime_2.pack(side='left')
         self.repeattime_3.pack(side='left')
         self.repeattime_4.pack(side='left')
+        
+        self.now_song = ttk.Label(self.right_frame, text="".join(self.alarm_song[0]), width = 25, background = 'white')
+        self.now_song.pack(anchor=tk.NW)
         
         self.hide_alarm()
         
@@ -141,7 +153,7 @@ class Alarm:
         
     def init_alarm(self):
         point = 0
-        fp = open('alarm/alarm_init.txt', "r")
+        fp = open('alarm/alarm_init.txt', "r",encoding="utf-8")
         line = fp.readline()
         while line:
             if(point < 6):
@@ -172,7 +184,7 @@ class Alarm:
         
     def save(self):
         point = 0
-        fp = open('alarm/alarm2_init.txt', "w+")
+        fp = open('alarm/alarm2_init.txt', "w+",encoding="utf-8")
         for i in range(0,36):
             if(point < 6):
                 fp.writelines(self.alarm_activate[point])
@@ -212,10 +224,11 @@ class Alarm:
         self.repeattime_3.config(variable=self.v1)
         self.repeattime_4.config(variable=self.v1)
         
+        #self.now_song.config(text="".join(self.alarm_song[alarm_ID]))
     
     def show_alarm(self):
-        self.detail_frame.pack(anchor=tk.NW,pady=20,padx=80)
-        self.alarm_frame.pack(anchor=tk.S)
+        self.detail_frame.pack(anchor=tk.NW,pady=(10, 0),padx=(10,10))
+        self.alarm_frame.pack(anchor=tk.CENTER,pady=(30, 0))
         
     def adjust_alarm(self, pos, num):#hour or min, +1 or -1
         ID = self.now_detail_alarmID
