@@ -57,6 +57,6 @@ class Homepage():
         self.weather_frame.pack_forget()
     
     def show_homepage(self):
-        self.time_frame.pack(anchor = tk.N)
-        self.weather_frame.pack(anchor = tk.S)
+        self.time_frame.pack(anchor = tk.N, pady=(30,0))
+        self.weather_frame.pack(anchor = tk.S, fill = tk.X, pady = (50,0))
         
