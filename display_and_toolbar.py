@@ -33,14 +33,18 @@ class Display:
         self.root_width = int(self.root_height/5.1*7.6)
         self.root.geometry(str(self.root_width)+"x"+str(self.root_height))
         
+        #Big frame
+        self.big_frame = tk.Frame(self.root, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.big_frame.pack(side = 'left', fill=tk.BOTH,expand = True)
+        
         
         #tool frame
-        self.tool_frame = tk.Frame(self.root, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.tool_frame = tk.Frame(self.big_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
         self.tool_frame.pack(side = 'left', fill=tk.Y)
         
         #main frame
-        self.main_frame = tk.Frame(self.root, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
-        self.main_frame.pack(anchor = tk.N, fill=tk.BOTH)
+        self.main_frame = tk.Frame(self.big_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.main_frame.pack(anchor = tk.N, fill=tk.BOTH,expand = True)
         
         
         self.weather = Weather()

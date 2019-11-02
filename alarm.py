@@ -202,24 +202,117 @@ class Alarm:
         #function frame
         self.function_frame = ttk.Frame(self.right_frame)        
         self.function_frame.pack(anchor=tk.NE, padx = 0, fill=tk.X)   
-        self.cancel=ttk.Button(self.function_frame, text="取消", command=self.init_alarm, width=6, style = "big.TButton")
-        self.save=ttk.Button(self.function_frame, text="保存", command=self.save, width=6, style = "big.TButton")
+        self.cancel=ttk.Button(self.function_frame, text="取消離開", command=self.hide_setting, width=8, style = "big.TButton")
+        self.save=ttk.Button(self.function_frame, text="保存", command=self.save, width=4, style = "big.TButton")
         self.save.pack(side = "right")
         self.cancel.pack(side = "right")
         self.alarm_tool_label = ttk.Label(self.function_frame, text = "未修改", font=("Arial",10))       
         self.alarm_tool_label.pack(side="left", padx = (10,0))
         
-        #head_frame
-        self.head_frame = tk.Frame(self.main_frame, relief="groove", borderwidth=2) 
-        self.head_frame.pack(side = "top")
+        #table frame        
+        self.table_frame = tk.Frame(self.main_frame, relief="groove", borderwidth=2) 
+        self.table_frame.pack(side = "top")
         
-        #every_alarm_frame
-        self.A1 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2) 
-        self.A1.pack(side = "left")
-        self.A1_label = ttk.Label(self.A1, text = "".join(self.alarm_Name[0]), font=("Arial",10))
-        self.A1_label.pack(anchor = tk.NW)
-        self.A1_time_label= ttk.Label(self.A1, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",10))
-        self.A1_time_label.pack(anchor = tk.NW)
+        
+        #head_frame
+        self.head_frame = tk.Frame(self.table_frame) 
+        self.head_frame.pack(side = "top", pady = (20,10))
+        
+        #every_alarm_frame 1
+        self.A1 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2 ) 
+        self.A1.pack(side = "left", padx = (0,10))
+        self.A1_sm_frame = tk.Frame(self.A1) 
+        self.A1_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A1_label = ttk.Label(self.A1_sm_frame, text = "".join(self.alarm_Name[0]), font=("Arial",10))
+        self.A1_label.pack(side = "left")        
+        self.A1_ON_OFF_1 = ttk.Label(self.A1_sm_frame, text="ON" if self.alarm_activate[0] == 0 else "OFF", font=("Arial",12))
+        self.A1_ON_OFF_1.pack(side ="right")
+        self.A1_time_label= ttk.Label(self.A1, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",16))
+        self.A1_time_label.pack(anchor = tk.NW)    
+        self.A1_song = ttk.Label(self.A1, text="".join(self.alarm_song[0]), width = 25, background = 'white')
+        self.A1_song.pack(anchor=tk.NW)
+        
+        #every_alarm_frame 2
+        self.A2 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2 ) 
+        self.A2.pack(side = "left")
+        self.A2_sm_frame = tk.Frame(self.A2) 
+        self.A2_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A2_label = ttk.Label(self.A2_sm_frame, text = "".join(self.alarm_Name[1]), font=("Arial",10))
+        self.A2_label.pack(side = "left")        
+        self.A2_ON_OFF_1 = ttk.Label(self.A2_sm_frame, text="ON" if self.alarm_activate[1] == 0 else "OFF", font=("Arial",12))
+        self.A2_ON_OFF_1.pack(side ="right")
+        self.A2_time_label= ttk.Label(self.A2, text=str(self.detail_hour[1]).zfill(2)+" : "+str(self.detail_min[1]).zfill(2), font=("Arial",16))
+        self.A2_time_label.pack(anchor = tk.NW) 
+        self.A2_song = ttk.Label(self.A2, text="".join(self.alarm_song[1]), width = 25, background = 'white')
+        self.A2_song.pack(anchor=tk.NW)
+        
+        #mid_frame
+        self.mid_frame = tk.Frame(self.table_frame) 
+        self.mid_frame.pack(side = "top", pady = (0,10))
+        
+        #every_alarm_frame 3
+        self.A3 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2 ) 
+        self.A3.pack(side = "left", padx = (0,10))
+        self.A3_sm_frame = tk.Frame(self.A3) 
+        self.A3_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A3_label = ttk.Label(self.A3_sm_frame, text = "".join(self.alarm_Name[2]), font=("Arial",10))
+        self.A3_label.pack(side = "left")        
+        self.A3_ON_OFF_1 = ttk.Label(self.A3_sm_frame, text="ON" if self.alarm_activate[2] == 0 else "OFF", font=("Arial",12))
+        self.A3_ON_OFF_1.pack(side ="right")
+        self.A3_time_label= ttk.Label(self.A3, text=str(self.detail_hour[2]).zfill(2)+" : "+str(self.detail_min[2]).zfill(2), font=("Arial",16))
+        self.A3_time_label.pack(anchor = tk.NW)    
+        self.A3_song = ttk.Label(self.A3, text="".join(self.alarm_song[2]), width = 25, background = 'white')
+        self.A3_song.pack(anchor=tk.NW)
+        
+        #every_alarm_frame 4
+        self.A4 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2 ) 
+        self.A4.pack(side = "left")
+        self.A4_sm_frame = tk.Frame(self.A4) 
+        self.A4_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A4_label = ttk.Label(self.A4_sm_frame, text = "".join(self.alarm_Name[3]), font=("Arial",10))
+        self.A4_label.pack(side = "left")        
+        self.A4_ON_OFF_1 = ttk.Label(self.A4_sm_frame, text="ON" if self.alarm_activate[3] == 0 else "OFF", font=("Arial",12))
+        self.A4_ON_OFF_1.pack(side ="right")
+        self.A4_time_label= ttk.Label(self.A4, text=str(self.detail_hour[3]).zfill(2)+" : "+str(self.detail_min[3]).zfill(2), font=("Arial",16))
+        self.A4_time_label.pack(anchor = tk.NW) 
+        self.A4_song = ttk.Label(self.A4, text="".join(self.alarm_song[3]), width = 25, background = 'white')
+        self.A4_song.pack(anchor=tk.NW)
+        
+        
+        #mid_frame
+        self.ft_frame = tk.Frame(self.table_frame) 
+        self.ft_frame.pack(side = "top")
+        
+        #every_alarm_frame 5
+        self.A5 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2 ) 
+        self.A5.pack(side = "left", padx = (0,10))
+        self.A5_sm_frame = tk.Frame(self.A5) 
+        self.A5_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A5_label = ttk.Label(self.A5_sm_frame, text = "".join(self.alarm_Name[4]), font=("Arial",10))
+        self.A5_label.pack(side = "left")        
+        self.A5_ON_OFF_1 = ttk.Label(self.A5_sm_frame, text="ON" if self.alarm_activate[4] == 0 else "OFF", font=("Arial",12))
+        self.A5_ON_OFF_1.pack(side ="right")
+        self.A5_time_label= ttk.Label(self.A5, text=str(self.detail_hour[4]).zfill(2)+" : "+str(self.detail_min[4]).zfill(2), font=("Arial",16))
+        self.A5_time_label.pack(anchor = tk.NW)    
+        self.A5_song = ttk.Label(self.A5, text="".join(self.alarm_song[4]), width = 25, background = 'white')
+        self.A5_song.pack(anchor=tk.NW)
+        
+        #every_alarm_frame 6 
+        self.A6 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2 ) 
+        self.A6.pack(side = "left")
+        self.A6_sm_frame = tk.Frame(self.A6) 
+        self.A6_sm_frame.pack(anchor = tk.NW, fill = tk.X)
+        self.A6_label = ttk.Label(self.A6_sm_frame, text = "".join(self.alarm_Name[5]), font=("Arial",10))
+        self.A6_label.pack(side = "left")        
+        self.A6_ON_OFF_1 = ttk.Label(self.A6_sm_frame, text="ON" if self.alarm_activate[5] == 0 else "OFF", font=("Arial",12))
+        self.A6_ON_OFF_1.pack(side ="right")
+        self.A6_time_label= ttk.Label(self.A6, text=str(self.detail_hour[5]).zfill(2)+" : "+str(self.detail_min[5]).zfill(2), font=("Arial",16))
+        self.A6_time_label.pack(anchor = tk.NW) 
+        self.A6_song = ttk.Label(self.A6, text="".join(self.alarm_song[5]), width = 25, background = 'white')
+        self.A6_song.pack(anchor=tk.NW)
+        
+        self.set=ttk.Button(self.table_frame, text="設定", command=self.show_setting, width=10, style = "big.TButton")
+        self.set.pack(anchor = tk.SE)
         
         self.refreshMusiclist()
         
@@ -250,12 +343,6 @@ class Alarm:
             line = fp.readline()
             point+=1
         fp.close()
-        self.Alarm1.config(text="".join(self.alarm_Name[0]))
-        self.Alarm2.config(text="".join(self.alarm_Name[1]))
-        self.Alarm3.config(text="".join(self.alarm_Name[2]))
-        self.Alarm4.config(text="".join(self.alarm_Name[3]))
-        self.Alarm5.config(text="".join(self.alarm_Name[4]))
-        self.Alarm6.config(text="".join(self.alarm_Name[5]))
         if(not(self.first == 0)):
             self.cancel_hint()
         self.first = 1
@@ -309,19 +396,26 @@ class Alarm:
         
         self.on.set(self.alarm_activate[self.now_detail_alarmID])
         self.ON_OFF_1.config(variable=self.on)
-        self.ON_OFF_2.config(variable=self.on)
+        self.ON_OFF_2.config(variable=self.on)         
         
         self.N_alarm = alarm_ID
         
         #self.now_song.config(text="".join(self.alarm_song[alarm_ID]))
     
     def show_alarm(self):
-        self.head_frame.pack(side = "top")
+        self.table_frame.pack(side = "top")
         self.time_label.place(y = 2, x = self.root_width - 60 )
+        self.A1_ON_OFF_1.config(text="ON" if self.alarm_activate[0] == 0 else "OFF")
+        self.A2_ON_OFF_1.config(text="ON" if self.alarm_activate[1] == 0 else "OFF")
+        self.A3_ON_OFF_1.config(text="ON" if self.alarm_activate[2] == 0 else "OFF")
+        self.A4_ON_OFF_1.config(text="ON" if self.alarm_activate[3] == 0 else "OFF")
+        self.A5_ON_OFF_1.config(text="ON" if self.alarm_activate[4] == 0 else "OFF")
+        self.A6_ON_OFF_1.config(text="ON" if self.alarm_activate[5] == 0 else "OFF")
         
     def hide_alarm(self):
-        self.head_frame.pack_forget()
+        self.table_frame.pack_forget()
         self.time_label.place_forget()
+        self.setting_frame.pack_forget()
         
     def adjust_alarm(self, pos, num):#hour or min, +1 or -1
         ID = self.now_detail_alarmID
@@ -386,10 +480,20 @@ class Alarm:
         self.time_label.config(text=time.strftime("%H:%M:%S", time.localtime()))
         
     def show_setting(self):
+        self.table_frame.pack_forget()
         self.setting_frame.pack(side='top', fill=tk.BOTH)
         
     def hide_setting(self):
         self.setting_frame.pack_forget()
+        self.table_frame.pack(side = "top")
+        self.A1_ON_OFF_1.config(text="ON" if self.alarm_activate[0] == 0 else "OFF")
+        self.A2_ON_OFF_1.config(text="ON" if self.alarm_activate[1] == 0 else "OFF")
+        self.A3_ON_OFF_1.config(text="ON" if self.alarm_activate[2] == 0 else "OFF")
+        self.A4_ON_OFF_1.config(text="ON" if self.alarm_activate[3] == 0 else "OFF")
+        self.A5_ON_OFF_1.config(text="ON" if self.alarm_activate[4] == 0 else "OFF")
+        self.A6_ON_OFF_1.config(text="ON" if self.alarm_activate[5] == 0 else "OFF")
+        self.init_alarm()
+        
 
         
         
