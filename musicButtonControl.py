@@ -177,7 +177,7 @@ class MusicButtonControl(tk.Frame):
         print(self.getCurrentMusicPath())
         self.play()
     
-    def play(self):
+    def play(self): 
         self.otherMusicList.play()
         
     def switch_list(self,musiclist_ID):

@@ -38,7 +38,7 @@ class FMpage():
         self.m = StringVar()
         self.FMlist= tk.Listbox(self.buttonmap,width=49,height=5,listvariable=self.m)
         self.FMlist.pack(side='left',fill=tk.X,pady=50)
-        for item in range(6): 
+        for item in range(20): 
             self.FM.FM_name_code=item
             self.FMlist.insert(tk.END, str(self.FM.print_FM_Name()))
         # 创建Scrollbar组件，设置该组件与self.lb的纵向滚动关联

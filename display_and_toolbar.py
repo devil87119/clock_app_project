@@ -8,10 +8,11 @@ Created on Wed Aug 14 17:07:35 2019
 import tkinter as tk  
 #from test_GUI import *
 from homepage import *
-from weather2 import *
+from weather import *
 from alarm import *
 from musicList import MusicList
 from musicButtonControl import *
+from weather_page import *
 from FMpage import *
 import pygame
 import time
@@ -29,17 +30,18 @@ class Display:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("大賢四代目")
-        self.root_height = 326
+        #self.root.attributes('-type', 'dock')
+        self.root_height = 322
         self.root_width = int(self.root_height/5.1*7.6)
         self.root.geometry(str(self.root_width)+"x"+str(self.root_height))
         
         #Big frame
-        self.big_frame = tk.Frame(self.root, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.big_frame = tk.Frame(self.root)#, highlightcolor="green", highlightthickness=5
         self.big_frame.pack(side = 'left', fill=tk.BOTH,expand = True)
         
         
         #tool frame
-        self.tool_frame = tk.Frame(self.big_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.tool_frame = tk.Frame(self.big_frame)#, highlightcolor="green", highlightthickness=5
         self.tool_frame.pack(side = 'left', fill=tk.Y)
         
         #main frame
@@ -47,17 +49,18 @@ class Display:
         self.main_frame.pack(anchor = tk.N, fill=tk.BOTH,expand = True)
         
         
-        self.weather = Weather()
+        self.weather = Weather("新北市")
         self.homepage = Homepage(self.root, self.main_frame,self.root_height,self.weather)             
         self.musicList = MusicList(self.root,self.main_frame,self.root_height)
         self.musicButtonControl = MusicButtonControl(self.root,self.main_frame,self.root_height,self.musicList)
         self.alarm = Alarm(self.root, self.main_frame,self.root_height,self.musicList)
         self.FMpage = FMpage(self.root, self.main_frame, self.root_height)  
-        self.toolbar = Toolbar(self.root, self.tool_frame, self.homepage, self.alarm, self.musicButtonControl, self.FMpage, self.root_height)
+        self.weather_page = weather_page(self.root, self.main_frame,self.root_height,self.weather)
+        self.toolbar = Toolbar(self.root, self.tool_frame, self.homepage, self.alarm, self.musicButtonControl, self.FMpage, self.weather_page, self.root_height)
     
 
 class Toolbar():
-    def __init__(self, root, tool_frame, homepage, alarm, musicButtonControl, FMpage, root_height):   
+    def __init__(self, root, tool_frame, homepage, alarm, musicButtonControl, FMpage, weather_page, root_height):   
         #set button x,y 
         self.button_X = 0
         self.root_height = root_height
@@ -66,6 +69,7 @@ class Toolbar():
         self.alarm = alarm
         self.musicButtonControl = musicButtonControl
         self.FMpage = FMpage
+        self.weather_page = weather_page
         self.tool_frame=tool_frame
         
         #toolbar button
@@ -117,8 +121,7 @@ class Toolbar():
     
             if(now_page==0):#homepage animation
                 self.homepage.time()
-                self.homepage.refresh_weather() 
-                
+                self.homepage.refresh_weather()                 
             
             if(now_page == 1):
                self.FMpage.FM.FM_code = self.FMpage.FMlist.curselection()
@@ -144,11 +147,28 @@ class Toolbar():
                     if(song_point==len(s1)+1):
                         song_point=0
                         song_animation_start = 0
-                self.alarm.FMtime()
+                self.alarm.FMtime()                
             
-            #self.test()                      
+            m = 0
+            if self.alarm.setting_zone == 0:
+                flag = m
+                flag = self.alarm.Alarming()
+                if flag == 0:
+                    m = flag
             
-            run_time=(run_time+1)%200            
+            if self.alarm.ring_state == 1:
+                self.alarm.ring_label.config(text=" "+"".join(self.alarm.alarm_Name[flag])+" 正在響鈴")
+                self.switch_page(8)
+            if self.alarm.ring_state == 2:
+                print("123")
+                self.alarm.ring_frame.pack_forget()
+                self.switch_page(now_page)
+                self.alarm.ring_state = 0
+            
+            
+            #self.test()   
+            
+            run_time=(run_time+1)%200 
             time.sleep(0.005)
             #label.config(text="GG")
         
@@ -159,25 +179,32 @@ class Toolbar():
             return
         if(now_page == 0):
             self.homepage.hide_homepage()
-        if(now_page == 1):
+        elif(now_page == 1):
             self.FMpage.hide_FMpage()
-        if(now_page==2):
+        elif(now_page==2):
             #self.musicList.hide_musiclist()
             self.musicButtonControl.hide_musicbuttoncontrol()
-        if(now_page == 3):
-            self.alarm.hide_alarm()
+        elif(now_page == 3):
+            self.alarm.hide_alarm()            
+        elif(now_page == 5):
+            self.weather_page.hide_weather_page()
             
         if(page_ID == 0):
             self.homepage.show_homepage()
-        if(page_ID == 1):
+        elif(page_ID == 1):
             self.FMpage.show_FMpage()
-        if(page_ID == 2):
+        elif(page_ID == 2):
             #self.musicList.show_musiclist()
             self.musicButtonControl.show_musicbuttoncontrol()
-        if(page_ID == 3):
+        elif(page_ID == 3):
             self.alarm.show_alarm()
-            
-        now_page = page_ID
+        elif(page_ID == 5):
+            self.weather_page.show_weather_page()        
+        elif(page_ID == 8):
+            self.alarm.ring_frame.pack(side = "top",pady = (100,0))
+          
+        if not page_ID == 8:
+            now_page = page_ID
             
             
     def clickOK(self):
@@ -213,7 +240,7 @@ class Toolbar():
     def test(self):
         #global run_time, song_point, song_animation_start
         global now_page
-        self.test_label.config(text="".join(self.alarm.alarm_song[self.alarm.now_detail_alarmID]))
+        self.test_label.config(text=(self.alarm.ring_state))
         self.test_label.place(x=200,y=200)
         
             

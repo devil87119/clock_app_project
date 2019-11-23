@@ -57,7 +57,19 @@ class MusicList(tk.Frame):
             path= r"music/MusicList5"#"\home\pi\/Music"
         if(page==6):
             path= r"music/MusicList6"#"\home\pi\/Music
-        return path
+        return path    
+    
+    def playMusic(self,songname):
+        #global stop,pause
+        #stop=0
+        #pause=0
+        path= r"music"
+        musicAbsPath= path +"\\"+songname
+        if (pygame.mixer.music.load(musicAbsPath)==False):
+            print('error')
+        else:
+            print(musicAbsPath) 
+            self.play()
     
     def play(self):
         pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
@@ -65,6 +77,7 @@ class MusicList(tk.Frame):
 
     def pauseMusic(self):
         pygame.mixer.music.pause()
+        
     def unpauseMusic(self):
         pygame.mixer.music.unpause()
             

@@ -7,7 +7,7 @@ Created on Thu Aug 15 22:33:24 2019
 import tkinter as tk
 from tkinter import ttk
 import time
-from weather2 import *
+from weather import *
 
 class Homepage():
     def __init__(self, root, main_frame, root_height, weather):
