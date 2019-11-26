@@ -86,7 +86,7 @@ class Alarm:
         
         #detail of alarm
         ttk.Style().configure('Font.TLabelframe.Label', font = '25')#, foreground = "red"
-        self.detail_frame = ttk.LabelFrame(self.setting_frame, text = "".join(self.alarm_Name[0]), borderwidth=2, relief="groove", style = "Font.TLabelframe")#, highlightcolor="green", highlightthickness=5
+        self.detail_frame = ttk.Frame(self.setting_frame, borderwidth=2, relief="groove", style = "Font.TLabelframe")#, highlightcolor="green", highlightthickness=5
         self.detail_frame.pack(anchor=tk.NW,pady=(2, 0),padx=(10,10))
         self.alarm_frame.pack(anchor=tk.CENTER,pady=(2, 0))
         
@@ -98,20 +98,21 @@ class Alarm:
         self.right_frame = ttk.Frame(self.detail_frame, borderwidth=2, relief="groove")        
         self.right_frame.pack(side = 'top', padx = (10,0))
         
-        
-        #on off frame 
-        self.ON_OFF_label = ttk.Label(self.left_frame, text = "ON/OFF ", font=("Arial",10))        
-        #self.ON_OFF_label.pack(anchor=tk.NW, pady = (0,0))
+        #on off frame
         self.activate_frame = ttk.Frame(self.left_frame)        
-        self.activate_frame.pack(anchor=tk.NW, padx = 10,pady=(2,0))  
+        self.activate_frame.pack(anchor=tk.NW, padx = 10,pady=(2,0), expand = True, fill = tk.X) 
         
+        #alarm name
+        self.Alarm_name_label = ttk.Label(self.activate_frame, text = "".join(self.alarm_Name[0]), font=("Arial",14))        
+        self.Alarm_name_label.pack(side ="left",pady = (0,0))
+                                       
         #ON/OFF   
         self.on = tk.IntVar()
         self.on.set(self.alarm_activate[0]) 
         self.ON_OFF_1 = ttk.Radiobutton(self.activate_frame, text="ON", variable=self.on, value=0, command=lambda: self.set_ONOFF(0))
         self.ON_OFF_2 = ttk.Radiobutton(self.activate_frame, text="OFF", variable=self.on, value=1, command=lambda: self.set_ONOFF(1))
-        self.ON_OFF_1.pack(side ="left")
-        self.ON_OFF_2.pack(side ="left")
+        self.ON_OFF_2.pack(side ="right")
+        self.ON_OFF_1.pack(side ="right")
         
         #time_frame
         self.time_frame = ttk.Frame(self.left_frame)        
@@ -453,7 +454,7 @@ class Alarm:
         #self.Alarm1.config(text=self.alarm_activate[0])
         
     def switch(self,alarm_ID):
-        self.detail_frame.config(text="".join(self.alarm_Name[alarm_ID]), style = "Font.TLabelframe")
+        self.Alarm_name_label.config(text="".join(self.alarm_Name[alarm_ID]), style = "Font.TLabelframe")
         self.alarm_set_hour.config(text=str(self.detail_hour[alarm_ID]).zfill(2)+" : "+str(self.detail_min[alarm_ID]).zfill(2))
         self.now_detail_alarmID = alarm_ID
         self.v.set(self.alarm_RingTime[self.now_detail_alarmID])
@@ -726,6 +727,7 @@ class Alarm:
                 self.alarm_temp_hr[i]%=24
                 self.alarm_temp_min[i]%=60
                 self.ring_state = 1
+                print("ring")
                 return i
             elif self.N_ringing[i] == 1:
                 if N_hour == str(self.alarm_temp_hr[i]) and N_min == str(self.alarm_temp_min[i]) and N_sec == str(self.alarm_temp_sec[i]):
