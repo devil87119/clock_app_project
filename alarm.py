@@ -103,7 +103,7 @@ class Alarm:
         self.activate_frame.pack(anchor=tk.NW, padx = 10,pady=(2,0), expand = True, fill = tk.X) 
         
         #alarm name
-        self.Alarm_name_label = ttk.Label(self.activate_frame, text = "".join(self.alarm_Name[0]), font=("Arial",14))        
+        self.Alarm_name_label = ttk.Label(self.activate_frame, text = "".join(self.alarm_Name[0]), font=("Arial",14 ))        
         self.Alarm_name_label.pack(side ="left",pady = (0,0))
                                        
         #ON/OFF   
