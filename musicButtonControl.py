@@ -169,7 +169,7 @@ class MusicButtonControl(tk.Frame):
         if self.getCurrentMusicPath()==None:
             path= r"music"#'/home/pi/Music/'
             music=random.randint(0, self.listBox.size())
-            musicAbs1Path= path +"\\"+self.listBox.get(music)
+            musicAbs1Path= path +"/"+self.listBox.get(music)
             pygame.mixer.music.load(musicAbs1Path)
             print(musicAbs1Path)
         else:

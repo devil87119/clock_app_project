@@ -227,7 +227,7 @@ class Alarm:
         self.song_frame.pack(anchor=tk.NW)       
         self.alarm_song_label.pack(anchor=tk.NW, pady = (5,0))  
         self.lv= tk.StringVar()
-        self.listBox= tk.Listbox(self.song_frame,selectmode=tk.BROWSE,listvariable=self.lv, width = 30, height = 11)
+        self.listBox= tk.Listbox(self.song_frame,selectmode=tk.BROWSE,listvariable=self.lv, width = 30, height = 10)
         self.listBox.pack(anchor=tk.NW, padx = (10,0))
         
         # 创建Scrollbar组件，设置该组件与self.lb的纵向滚动关联

@@ -213,7 +213,6 @@ class Toolbar():
         #label.config(text="Click OK " + str(count) + " times")
         
     def refresh(self):
-        self.show_button.pack(side='left', padx = (self.button_X+52,0))
         self.Main_page.place(x=self.button_X,y = 1)
         self.FM_page.place(x=self.button_X,y = self.root_height/8+1)
         self.Music_page.place(x=self.button_X,y = self.root_height*2/8+1)
@@ -221,7 +220,8 @@ class Toolbar():
         self.Scedule_page.place(x=self.button_X,y = self.root_height*4/8+1)
         self.Weather_page.place(x=self.button_X,y = self.root_height*5/8+1)
         self.Game_page.place(x=self.button_X,y = self.root_height*6/8+1)
-        self.Setting_page.place(x=self.button_X,y = self.root_height*7/8+1)        
+        self.Setting_page.place(x=self.button_X,y = self.root_height*7/8+1)
+        self.show_button.pack(side='left', padx = (self.button_X+52,0))        
         
     def hide(self):        
         if(self.button_X>-52):  

@@ -11,7 +11,7 @@ import time
 import os
 
 temp_path = "music"
-#temp_path = "\\home\\pi\\Desktop\\clock\\clock_app_project-master\\music"
+#temp_path = "/home/pi/Desktop/clock/clock_app_project-master/musicZ"
 
 class MusicList(tk.Frame):
     def __init__(self,root,master, root_height):
@@ -20,19 +20,19 @@ class MusicList(tk.Frame):
         self.root_width = int(self.root_height/5.1*7.6)
         self.master=master
         
-        self.MusicList2 = temp_path+"\\MusicList2"
+        self.MusicList2 = temp_path+"/MusicList2"
         if not os.path.isdir(self.MusicList2):
             os.mkdir(self.MusicList2)
-        self.MusicList3 = temp_path+"\\MusicList3"
+        self.MusicList3 = temp_path+"/MusicList3"
         if not os.path.isdir(self.MusicList3):
             os.mkdir(self.MusicList3)
-        self.MusicList4 = temp_path+"\\MusicList4"
+        self.MusicList4 = temp_path+"/MusicList4"
         if not os.path.isdir(self.MusicList4):
             os.mkdir(self.MusicList4)
-        self.MusicList5 = temp_path+"\\MusicList5"
+        self.MusicList5 = temp_path+"/MusicList5"
         if not os.path.isdir(self.MusicList5):
             os.mkdir(self.MusicList5)
-        self.MusicList6 = temp_path+"\\MusicList6"
+        self.MusicList6 = temp_path+"/MusicList6"
         if not os.path.isdir(self.MusicList6):
             os.mkdir(self.MusicList6)
         
@@ -65,7 +65,7 @@ class MusicList(tk.Frame):
         #stop=0
         #pause=0
         path= temp_path
-        musicAbsPath= path +"\\"+songname
+        musicAbsPath= path +"/"+songname
         if (pygame.mixer.music.load(musicAbsPath)==False):
             print('error')
         else:
