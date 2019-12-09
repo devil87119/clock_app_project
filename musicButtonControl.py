@@ -64,6 +64,7 @@ class MusicButtonControl(tk.Frame):
         #self.otherMusicList= otherMusicList
         self.loadMusic()
         print("======音樂加載完成")
+    
 
      
         #self.buttonPlay= tk.Button(self.frame,text="播放",command=self.playMusic,width=5.height=2,bg='#FFEC8B') 
@@ -72,16 +73,15 @@ class MusicButtonControl(tk.Frame):
         self.buttonStop= tk.Button(self.frame,text="停止",command=self.stopMusic,width=6,height=2,bg='#FFEC8B')    
         self.buttonPrevious= tk.Button(self.frame,text="上一曲",command=self.previousMusic,width=6,height=2,bg='#FFEC8B')
         self.buttonNext= tk.Button(self.frame,text="下一曲",command=self.nextMusic,width=6,height=2,bg='#FFEC8B')
-        self.buttonPlus= tk.Button(self.frame,text="音量+",command=self.plus,width=6,height=2,bg='#FFEC8B')
-        self.buttonLess= tk.Button(self.frame,text="音量-",command=self.less,width=6,height=2,bg='#FFEC8B')                           
+        self.scalevolume= tk.Scale(self.frame,from_=0, to=100, orient=tk.HORIZONTAL,showvalue=1, command=self.plus)                           
         
         self.buttonPlay.pack(side=tk.LEFT)
         self.buttonPause.pack(side=tk.LEFT)
         self.buttonStop.pack(side=tk.LEFT)
         self.buttonPrevious.pack(side=tk.LEFT)
         self.buttonNext.pack(side=tk.LEFT)
-        self.buttonPlus.pack(side=tk.LEFT)
-        self.buttonLess.pack(side=tk.LEFT)
+        self.scalevolume.pack(side=tk.LEFT)
+        #self.buttonLess.pack(side=tk.LEFT)
         
         big_button_Style = ttk.Style ()
         big_button_Style.configure("big.TButton", font = ('Arial','10'))
@@ -138,11 +138,9 @@ class MusicButtonControl(tk.Frame):
                 #print("-----", path)
                 return path
                 
-    def plus(self):
-        self.otherMusicList.plus()
-        
-    def less(self):
-        self.otherMusicList.less()
+    def plus(self,val):
+        volume=int(val)/100
+        pygame.mixer.music.set_volume(volume)
     
     # 添加音樂曲目
     def addMusicName(self):
