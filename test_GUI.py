@@ -12,7 +12,7 @@ from  display_and_toolbar import *
 #from PIL import ImageTk,Image
 
 '''def toolBar_Animation():
-        th=threading.Thread(target=Animation)
+        th=threading.Thread(target=Animation) 
         th.setDaemon(True)
         th.start()
         

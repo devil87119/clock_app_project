@@ -91,11 +91,11 @@ class Alarm:
         self.alarm_frame.pack(anchor=tk.CENTER,pady=(2, 0))
         
         #left detial frame
-        self.left_frame = ttk.Frame(self.detail_frame, borderwidth=2, relief="groove")        
+        self.left_frame = ttk.Frame(self.detail_frame)        
         self.left_frame.pack(side = 'left')
         
         #Right detial frame
-        self.right_frame = ttk.Frame(self.detail_frame, borderwidth=2, relief="groove")        
+        self.right_frame = ttk.Frame(self.detail_frame)        
         self.right_frame.pack(side = 'top', padx = (10,0))
         
         #on off frame
@@ -249,7 +249,7 @@ class Alarm:
         self.alarm_tool_label.pack(side="left", padx = (10,0))
         
         #table frame        
-        self.table_frame = tk.Frame(self.main_frame, relief="groove", borderwidth=2) 
+        self.table_frame = tk.Frame(self.main_frame) 
         self.table_frame.pack(side = "top")
         
         
@@ -375,10 +375,10 @@ class Alarm:
         self.A6_song.pack(anchor=tk.NW)
         
         self.set=ttk.Button(self.table_frame, text="設定", command=self.show_setting, width=15, style = "big.TButton")
-        self.set.pack(anchor = tk.SE, pady = (25,0), padx = (0,25))
+        self.set.pack(anchor = tk.SE, pady = (25,10), padx = (0,25))
         
         self.ring_state = 0
-        self.ring_frame = tk.Frame(self.main_frame, relief="groove" , borderwidth=2)
+        self.ring_frame = tk.Frame(self.main_frame)
         self.ring_label = ttk.Label(self.ring_frame, text="", font=("Arial",16))
         self.ring_label.pack(anchor = tk.N, pady = (10,0),padx = (20,20))
         self.ring_stop_button= ttk.Button(self.ring_frame,text="關閉",command=self.stop_music,width=8)#,bg='#FFEC8B'

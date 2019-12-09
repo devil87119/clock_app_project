@@ -45,11 +45,11 @@ class Display:
         self.tool_frame.pack(side = 'left', fill=tk.Y)
         
         #main frame
-        self.main_frame = tk.Frame(self.big_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.main_frame = tk.Frame(self.big_frame)#, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
         self.main_frame.pack(anchor = tk.N, fill=tk.BOTH,expand = True)
         
         
-        self.weather = Weather("新北市")
+        self.weather = Weather("Taipei")
         self.homepage = Homepage(self.root, self.main_frame,self.root_height,self.weather)             
         self.musicList = MusicList(self.root,self.main_frame,self.root_height)
         self.musicButtonControl = MusicButtonControl(self.root,self.main_frame,self.root_height,self.musicList)
@@ -112,6 +112,7 @@ class Toolbar():
         run_time = 0
         song_animation_start = 0
         alarm_ID = 0
+        temp_sel_musicList = "總清單"
         while(1):
             #hide or show toolbar 
             if(count%2 == 1):
@@ -123,14 +124,28 @@ class Toolbar():
                 self.homepage.time()
                 self.homepage.refresh_weather()                 
             
-            if(now_page == 1):
+            elif(now_page == 1):
                self.FMpage.FM.FM_code = self.FMpage.FMlist.curselection()
                self.FMpage.FMtime()
                 
-            if(now_page==2):
-                self.musicButtonControl.switch()                
+            elif(now_page==2):
+                self.musicButtonControl.switch()                    
+                if temp_sel_musicList != (self.musicButtonControl.comboExample.get()):
+                    temp_sel_musicList = (self.musicButtonControl.comboExample.get())
+                    if(temp_sel_musicList == "總清單"):
+                        self.musicButtonControl.switch_list(1)
+                    elif(temp_sel_musicList == "播放清單1"):
+                        self.musicButtonControl.switch_list(2)
+                    elif(temp_sel_musicList == "播放清單2"):
+                        self.musicButtonControl.switch_list(3)
+                    elif(temp_sel_musicList == "播放清單3"):
+                        self.musicButtonControl.switch_list(4)
+                    elif(temp_sel_musicList == "播放清單4"):
+                        self.musicButtonControl.switch_list(5)
+                    elif(temp_sel_musicList == "播放清單5"):
+                        self.musicButtonControl.switch_list(6)
                 
-            if(now_page==3):#alarm animation
+            elif(now_page==3):#alarm animation
                 s1 = "".join(self.alarm.alarm_song[self.alarm.now_detail_alarmID])
                 if(not(alarm_ID==self.alarm.now_detail_alarmID and song == s1)):
                     self.alarm.now_song.config(text=s1)
