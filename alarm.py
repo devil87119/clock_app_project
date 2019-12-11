@@ -702,6 +702,7 @@ class Alarm:
         N_sec = time.strftime("%S", time.localtime())
         N_week = time.strftime("%a", time.localtime())
         
+        
         for i in range(6):
             if self.alarm_activate[i] == 1:
                 continue
@@ -726,7 +727,7 @@ class Alarm:
             if N_week == "Sat":
                 if not self.w6.get():
                     continue
-            if N_hour == str(self.detail_hour[i]) and N_min == str(self.detail_min[i])and N_sec =="00" and self.N_ringing[i] == 0:
+            if N_hour == str(self.detail_hour[i]).zfill(2) and N_min == str(self.detail_min[i]).zfill(2)and N_sec =="00" and self.N_ringing[i] == 0:
                 self.musiclist.playMusic("".join(self.alarm_song[i]))
                 self.detail_sec[i] = time.strftime("%S", time.localtime())
                 self.N_ringing[i] = 1
@@ -739,7 +740,7 @@ class Alarm:
                 print("ring")
                 return i
             elif self.N_ringing[i] == 1:
-                if N_hour == str(self.alarm_temp_hr[i]) and N_min == str(self.alarm_temp_min[i]) and N_sec == str(self.alarm_temp_sec[i]):
+                if N_hour == str(self.alarm_temp_hr[i]).zfill(2) and N_min == str(self.alarm_temp_min[i]).zfill(2) and N_sec == str(self.alarm_temp_sec[i]).zfill(2):
                     self.N_ringing[i] = 0
                     self.musiclist.stopMusic()                    
                     self.ring_state = 2

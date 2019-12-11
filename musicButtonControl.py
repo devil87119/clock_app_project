@@ -45,7 +45,7 @@ class MusicButtonControl(tk.Frame):
         self.addnewmusic= tk.Frame(self.frame1)
         self.sel_musicList = 0
         self.m= tk.Frame(self.frame1, borderwidth=5, relief="groove",bg = 'black')
-        self.m.pack(side=tk.TOP, pady = (0,10))
+        self.m.pack(side=tk.TOP, pady = (0,5))
         
         #圖片
         self.play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
@@ -58,7 +58,7 @@ class MusicButtonControl(tk.Frame):
         self.pipe_image=ImageTk.PhotoImage(Image.open('picture/pipe.jpg'))
         
         self.lv= tk.StringVar()
-        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=8,bg="light grey",listvariable=self.lv)
+        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=7,bg="light grey",listvariable=self.lv)
         self.listBox.pack(side=tk.TOP)
         self.otherMusicList= otherMusicList
                                  
@@ -136,7 +136,7 @@ class MusicButtonControl(tk.Frame):
         path=self.otherMusicList.MusicPath(page)
         # self.listBox.select_set(0)
         for item in range(self.listBox.size()):
-            musicAbsPath= path +"\\"+self.listBox.get(item)
+            musicAbsPath= path +"/"+self.listBox.get(item)
             if self.listBox.selection_includes(item):
                 path= musicAbsPath
                 #print("-----", path)
@@ -209,7 +209,7 @@ class MusicButtonControl(tk.Frame):
                     if path1list1[-1]== ".mp3":
                         if (self.getCurrentMusic()==musicName2):
                             #print(self.getCurrentMusic())
-                            musicAbsPath= path1 +"\\"+musicName2
+                            musicAbsPath= path1 +"/"+musicName2
                             os.remove(musicAbsPath)
             os.remove(self.getCurrentMusicPath())
             #print(self.getCurrentMusicPath())
@@ -239,11 +239,11 @@ class MusicButtonControl(tk.Frame):
         if self.getCurrentMusicPath()==None:
             path=self.otherMusicList.MusicPath(page)
             music=random.randint(0, self.listBox.size())
-            musicAbs1Path= path +"\\"+self.listBox.get(music)
+            musicAbs1Path= path +"/"+self.listBox.get(music)
             pygame.mixer.music.load(musicAbs1Path)
             print(musicAbs1Path)
         else:
-            pygame.mixer.music.load(self.getCurrentMusicPath())
+            pygame.mixer.music.load(self.getCurrentMusicPath()) 
         print(self.getCurrentMusicPath()) 
         self.play()
     
@@ -317,16 +317,16 @@ class MusicButtonControl(tk.Frame):
         path=self.otherMusicList.MusicPath(page)
         currentMusicPath= self.getCurrentMusicPath()
         for musicpathIndex in range(self.listBox.size()):
-            musicAbs1Path= path +"\\"+self.listBox.get(musicpathIndex)
+            musicAbs1Path= path +"/"+self.listBox.get(musicpathIndex)
             if currentMusicPath== musicAbs1Path:
                 ismusic= musicpathIndex
                 ismusic-= 1
                 if ismusic < 0:
-                    pygame.mixer.music.load(path+ "\\"+self.listBox.get(0))
+                    pygame.mixer.music.load(path+ "/"+self.listBox.get(0))
                     pygame.mixer.music.play()
                     break
                 break
-        musicAbsPath= path +"\\"+self.listBox.get(ismusic)
+        musicAbsPath= path +"/"+self.listBox.get(ismusic)
         pygame.mixer.music.load(musicAbsPath)
         # 顯示正在播放的歌曲，並取消上一首歌曲
         self.listBox.select_clear(musicpathIndex)
@@ -341,7 +341,7 @@ class MusicButtonControl(tk.Frame):
         print(currentMusicPath)
         for musicpathIndex in range(self.listBox.size()):
             ismusic=0
-            musicAbs1Path= path +"\\"+self.listBox.get(musicpathIndex)
+            musicAbs1Path= path +"/"+self.listBox.get(musicpathIndex)
             if currentMusicPath== musicAbs1Path:
                 ismusic= musicpathIndex
                 ismusic+= 1 
@@ -349,7 +349,7 @@ class MusicButtonControl(tk.Frame):
                     ismusic=0
                     break 
                 break
-        musicAbsPath= path +"\\"+self.listBox.get(ismusic)
+        musicAbsPath= path +"/"+self.listBox.get(ismusic)
         print(musicAbsPath)
         pygame.mixer.music.load(musicAbsPath)
         # 顯示正在播放的歌曲，並取消上一首歌曲
@@ -361,7 +361,7 @@ class MusicButtonControl(tk.Frame):
     def randomNext(self):
         path=self.otherMusicList.MusicPath(page)
         music=random.randint(0, self.listBox.size())
-        musicAbs1Path= path +"\\"+self.listBox.get(music)
+        musicAbs1Path= path +"/"+self.listBox.get(music)
         pygame.mixer.music.load(musicAbs1Path)
         print(musicAbs1Path)
         self.play()
@@ -463,7 +463,7 @@ class MusicButtonControl(tk.Frame):
             
             path= r"music"#"\home\pi\/Music"
             for item in range(self.listBox.size()):
-                musicAbsPath= path +"\\"+self.listBox.get(item)
+                musicAbsPath= path +"/"+self.listBox.get(item)
                 if self.listBox.selection_includes(item):
                     path= musicAbsPath
                     #print("-----", path)

@@ -52,9 +52,9 @@ class weather_page:
         self.on_hit2=False
         self.choose_the_city=False
         self.detail_frame = tk.Frame(self.weather_frame,width=self.root_width/2,height=self.root_height, relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
-        self.detail_frame.place(relx=0.5, rely=0.2, relwidth=0.9, relheight=0.1, anchor='n')
+        self.detail_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.1, anchor='n')
         self.detail_frame2 = tk.Frame(self.weather_frame,width=100,height=self.root_height,relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
-        self.detail_frame2.place(relx=0.5, rely=0.3, relwidth=0.9, relheight=0.4, anchor='n')
+        self.detail_frame2.place(relx=0.5, rely=0.19, relwidth=0.9, relheight=0.6, anchor='n')
         
         self.city_dic={ "基隆市" : "Keelung", "臺北市" : "Taipei", "新北市" : "New Taipei", 
                "桃園市" : "Taoyuan", "新竹市" : "Hsinchu", "新竹縣" : "Hsinchu",
@@ -87,7 +87,7 @@ class weather_page:
         self.city_set.place(relx=0.7, relheight=1.0, relwidth=0.3)
         
         self.var = ""
-        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',12),width=30,height=10,background='black', foreground="white")
+        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',14),width=30,height=10,background='black', foreground="white")
         #self.weather_detail.place(x=360,y=61)
         self.the_weather_detail.pack(side="left")
         

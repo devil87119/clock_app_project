@@ -22,7 +22,7 @@ def Animation():
         #hide or show toolbar 
         if(count%2 == 1):
             display.toolbar.hide()
-        else:
+         else:
             display.toolbar.show()
         
         display.homepage.time()

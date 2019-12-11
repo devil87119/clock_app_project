@@ -15,7 +15,7 @@ import wave
 
 set = False
 input_filepath = "event/"    
-#input_filepath = ""/home/pi/Desktop/clock/clock_app_project-master/event/"  
+#input_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
