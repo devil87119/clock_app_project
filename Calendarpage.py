@@ -184,7 +184,7 @@ class CalendarPage():
         
     def load_event(self):
         point = 0
-        fp = open('event/event_init.txt', "r",encoding="utf-8")
+        fp = open(input_filepath + 'event_init.txt', "r",encoding="utf-8")
         line = fp.readline()
         while line:
                self.year_tag = int(line.replace('\n',''))
@@ -202,7 +202,7 @@ class CalendarPage():
     def save(self):
         year = int(self.vYear.get())
         month = int(self.vMonth.get())        
-        fp = open('event/event_init.txt', "a+",encoding="utf-8")
+        fp = open(input_filepath + 'event_init.txt', "a+",encoding="utf-8")
         fp.writelines(str(year))
         if month < 10:
          fp.writelines("0"+str(month))
@@ -359,7 +359,7 @@ class CalendarPage():
         
     def get_event(self,year,month,day):
         date = year*10000 + month*100 + day
-        fp = open('event/event_init.txt', "r",encoding="utf-8")
+        fp = open(input_filepath + 'event_init.txt', "r",encoding="utf-8")
         line = fp.readline()
         filename_dict = {0:"無"}
         i = 0
@@ -424,7 +424,7 @@ class CalendarPage():
                file_name = str(self.selyear)+str(self.selmonth)+str(self.selday) 
         print(file_name)
         point = 0
-        fp = open('event/event_init.txt', "r",encoding="utf-8")
+        fp = open(input_filepath + 'event_init.txt', "r",encoding="utf-8")
         line = fp.readline()
         while line:
                year = str(line.replace('\n',''))
@@ -518,7 +518,7 @@ class CalendarPage():
       # 创建年份组件
       self.vYear = tk.StringVar()
       self.vYear.set(now[0])
-      tk.Label(self.calendar,text = 'Year',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
+      tk.Label(self.calendar,text = '年',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
       minus_year = tk.Button(self.calendar,bg='black', foreground="white", text="-", command=lambda: self.cal_year(-1), width=2, font = ('Sans','10'))
       minus_year.grid(row = 0,column = col_idx);col_idx += 1
       self.omYear = tk.Label(self.calendar,text=str(self.vYear.get()), font=("Arial",10),background='black', foreground="white",width = 5,height = 2)#tk.OptionMenu(self.calendar,self.vYear , *tuple(range(1998,2080)))
@@ -528,7 +528,7 @@ class CalendarPage():
       # 创建月份组件
       self.vMonth = tk.StringVar()
       self.vMonth.set(now[1])
-      tk.Label(self.calendar,text = 'Month',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
+      tk.Label(self.calendar,text = '月',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
       self.omMonth = tk.OptionMenu(self.calendar,self.vMonth, *tuple(range(1,13)))
       self.omMonth.config(bg = "black",foreground = 'white') 
       self.omMonth.grid(row = 0,column = col_idx);col_idx += 1
