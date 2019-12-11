@@ -20,27 +20,27 @@ class Homepage():
         self.main_frame=main_frame
         
         #time frame
-        self.time_frame = tk.Frame(self.main_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.time_frame = tk.Frame(self.main_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5
         self.time_frame.pack(anchor = tk.N, pady=(30,0))
             
         #Label of time
-        self.time_label=tk.Label(self.time_frame, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",60))
+        self.time_label=tk.Label(self.time_frame, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",60),background='black', foreground="white")
         self.time_label.pack(anchor = tk.N)
-        self.date_label=tk.Label(self.time_frame, text=time.strftime("%a %b %d %Y", time.localtime()), font=("Arial",12))
+        self.date_label=tk.Label(self.time_frame, text=time.strftime("%a %b %d %Y", time.localtime()), font=("Arial",12),background='black', foreground="white")
         self.date_label.pack(anchor = tk.NW, padx = (10,0))
         
         
         #weather frame
-        self.weather_frame = tk.Frame(self.main_frame, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
+        self.weather_frame = tk.Frame(self.main_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5
         self.weather_frame.pack(anchor = tk.S, fill = tk.X, pady = (50,0))
             
         
         #Label of city_name
-        self.cityName_label=ttk.Label(self.weather_frame, text=weather.print_city(), font=("Arial",18))
+        self.cityName_label=tk.Label(self.weather_frame, text=weather.print_city(), font=("Arial",18),background='black', foreground="white")
         self.cityName_label.pack(side = 'left', padx = (50,0))
         
         #Label of city day raining rate
-        self.cityDayRainingRate_label=tk.Label(self.weather_frame, text="降雨機率\n"+weather.print_day_rain_percent(), font=("Arial",18))
+        self.cityDayRainingRate_label=tk.Label(self.weather_frame, text="降雨機率\n"+weather.print_day_rain_percent(), font=("Arial",18),background='black', foreground="white")
         self.cityDayRainingRate_label.pack(side = 'right', padx = (100,50))
         
         
@@ -50,7 +50,7 @@ class Homepage():
         
     def refresh_weather(self):
         self.cityName_label.config(text=self.weather.print_city())
-        self.cityDayRainingRate_label.config(text="降雨機率\n"+self.weather.print_day_rain_percent())
+        self.cityDayRainingRate_label.config(text="降雨機率\n"+self.weather.print_day_rain_percent()+"%")
         
     def hide_homepage(self):
         self.time_frame.pack_forget()

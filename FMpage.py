@@ -23,21 +23,21 @@ class FMpage():
         self.main_frame = main_frame
         
         #Label of time
-        self.time_label=tk.Label(self.main_frame, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",10))
+        self.time_label=tk.Label(self.main_frame, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",10),background = 'black', foreground = 'white')
         self.time_label.pack(anchor=tk.NE)
         #set button x,y 
         self.button_X = 0
         
-        self.buttonmap = tk.Frame(self.main_frame)
-        self.map = tk.Frame(self.buttonmap)
-        self.buttonmap.pack(pady=50)
-        self.map.pack(side='bottom')
+        self.buttonmap = tk.Frame(self.main_frame, bg = 'black')
+        self.map = tk.Frame(self.buttonmap, bg = 'black')
+        self.buttonmap.pack(pady=50,side='top')
+        self.map.pack(side='bottom',pady = (0,50))
       
 
         #FM list
         self.m = StringVar()
         self.FMlist= tk.Listbox(self.buttonmap,width=49,height=5,listvariable=self.m)
-        self.FMlist.pack(side='left',fill=tk.X,pady=50)
+        self.FMlist.pack(side='top',fill=tk.X,pady=50)
         for item in range(20): 
             self.FM.FM_name_code=item
             self.FMlist.insert(tk.END, str(self.FM.print_FM_Name()))
@@ -49,8 +49,8 @@ class FMpage():
         # 为双击事件绑定事件处理方法
         self.FMlist.bind('<Double-1>', self.click)
          #tool button
-        self.play=tk.Button(self.map, text="PLAY",command=self.FM.play_FM ,width=6, height=2).pack(side='right')
-        self.stop=tk.Button(self.map, text="STOP",command=self.FM.stop_FM , width=6, height=2).pack(side='left',padx=50)
+        self.play=tk.Button(self.map, text="PLAY",command=self.FM.play_FM ,width=6, height=2).pack(side='left')
+        self.stop=tk.Button(self.map, text="STOP",command=self.FM.stop_FM , width=6, height=2).pack(side='left')
         self.hide_FMpage()
         
     def click(self, event):
@@ -58,7 +58,7 @@ class FMpage():
         self.FM.FM_code = self.FMlist.curselection()
         
     def FMtime(self):
-        self.time_label.config(text=time.strftime("%H:%M:%S", time.localtime()))
+        self.time_label.config(text=time.strftime("%H:%M:%S", time.localtime()),background = 'black', foreground = 'white')
         #self.date_label.config(text=time.strftime("%a %b %d", time.localtime()))
         
     def hide_FMpage(self):
@@ -69,7 +69,7 @@ class FMpage():
     
     def show_FMpage(self):
         self.time_label.pack(anchor = tk.NE)
-        self.buttonmap.pack(anchor = tk.NW)
+        self.buttonmap.pack(side = tk.TOP)
         
 
        

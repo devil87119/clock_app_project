@@ -26,7 +26,7 @@ class weather_page:
         self.weather=weather
         
         
-        self.weather_frame = tk.Frame(self.main_frame,bg="gray")
+        self.weather_frame = tk.Frame(self.main_frame,bg="black")
         self.weather_frame.pack()
         
         
@@ -51,9 +51,9 @@ class weather_page:
         self.on_hit=False
         self.on_hit2=False
         self.choose_the_city=False
-        self.detail_frame = tk.Frame(self.weather_frame,width=self.root_width/2,height=self.root_height, relief="groove", borderwidth = 2)#, highlightcolor="green", highlightthickness=5
+        self.detail_frame = tk.Frame(self.weather_frame,width=self.root_width/2,height=self.root_height, relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
         self.detail_frame.place(relx=0.5, rely=0.2, relwidth=0.9, relheight=0.1, anchor='n')
-        self.detail_frame2 = tk.Frame(self.weather_frame,width=100,height=self.root_height,relief="groove", borderwidth = 2)#, highlightcolor="green", highlightthickness=5
+        self.detail_frame2 = tk.Frame(self.weather_frame,width=100,height=self.root_height,relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
         self.detail_frame2.place(relx=0.5, rely=0.3, relwidth=0.9, relheight=0.4, anchor='n')
         
         self.city_dic={ "基隆市" : "Keelung", "臺北市" : "Taipei", "新北市" : "New Taipei", 
@@ -78,23 +78,23 @@ class weather_page:
         #self.city_list.place(x=48.5,y=16.3,width=15,height=20) 
         self.city_list.place(relwidth=0.4, relheight=1.0)
         
-        self.city_comfirm=ttk.Button(self.detail_frame,text='查詢目前城市天氣',command=self.weather_detail)
+        self.city_comfirm=tk.Button(self.detail_frame,text='查詢目前城市天氣',command=self.weather_detail,bg='black', foreground="white")
         #self.city_comfirm.place()
         self.city_comfirm.place(relx=0.4, relheight=1.0, relwidth=0.3)
         
         #self.city_set=ttk.Button(self.detail_frame,text='選擇',width=15,image=self.button_image,command=self.city_chosed)
-        self.city_set=ttk.Button(self.detail_frame,text='更改現居城市',width=15,command=self.city_chosed)
+        self.city_set=tk.Button(self.detail_frame,text='更改現居城市',width=15,command=self.city_chosed,bg='black', foreground="white")
         self.city_set.place(relx=0.7, relheight=1.0, relwidth=0.3)
         
         self.var = ""
-        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',12),width=30,height=10)
+        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',12),width=30,height=10,background='black', foreground="white")
         #self.weather_detail.place(x=360,y=61)
         self.the_weather_detail.pack(side="left")
         
-
+        self.choose_the_city = True
         
        
-        
+        self.weather_detail()
         self.hide_weather_page()
         
         '''

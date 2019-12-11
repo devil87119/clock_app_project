@@ -11,6 +11,7 @@ import pygame
 import os
 import random
 import time
+from PIL import ImageTk,Image
 import shutil
 
 
@@ -29,34 +30,43 @@ class MusicButtonControl(tk.Frame):
         self.root_height = root_height
         self.root_width = int(self.root_height/5.1*7.6)
         self.master=master
-        self.frame= tk.Frame(self.master)
+        self.frame= tk.Frame(self.master,bg = 'black')
         self.frame.pack(side= tk.TOP,fill=tk.X)
-        self.frame0= tk.Frame(self.master)
+        self.frame0= tk.Frame(self.master,bg = 'black')
         self.frame0.pack(side=tk.TOP,fill=tk.X)
-        self.frame1= tk.Frame(self.master)
+        self.frame1= tk.Frame(self.master,bg = 'black')
         self.frame1.pack(side=tk.TOP,fill=tk.X)
-        self.musiclist_top= tk.Frame(self.frame1)
+        self.musiclist_top= tk.Frame(self.frame1,bg = 'black')
         self.musiclist_top.pack(side=tk.TOP,fill=tk.X)
-        self.musiclist_bottom= tk.Frame(self.frame1)
+        self.musiclist_bottom= tk.Frame(self.frame1,bg = 'black')
         self.musiclist_bottom.pack(side=tk.TOP)
         self.addnewmusic= tk.Frame(self.frame1)
         self.sel_musicList = 0
-        self.m= tk.Frame(self.frame1, borderwidth=5, relief="groove")
-        self.m.pack(side=tk.TOP)
+        self.m= tk.Frame(self.frame1, borderwidth=5, relief="groove",bg = 'black')
+        self.m.pack(side=tk.TOP, pady = (0,10))
+        
+        #圖片
+        self.play_image=ImageTk.PhotoImage(Image.open('picture/play1.jpg'))
+        self.pause_image=ImageTk.PhotoImage(Image.open('picture/pause.jpg'))
+        self.stop_image=ImageTk.PhotoImage(Image.open('picture/stop.jpg'))
+        self.previous_image=ImageTk.PhotoImage(Image.open('picture/lastsong.jpg'))
+        self.next_image=ImageTk.PhotoImage(Image.open('picture/nextsong.jpg'))
+        self.circle_image=ImageTk.PhotoImage(Image.open('picture/restart.jpg'))
+        self.random_image=ImageTk.PhotoImage(Image.open('picture/cycle.jpg'))
         
         self.lv= tk.StringVar()
-        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=10,bg="#FFFACD",listvariable=self.lv)
+        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=8,bg="#FFFACD",listvariable=self.lv)
         self.listBox.pack(side=tk.TOP)
         self.otherMusicList= otherMusicList
                                  
         self.addnewmusic.pack(side=tk.LEFT,fill=tk.X)
-        self.ADD_FRAME= tk.Frame(self.musiclist_top)
-        self.ADD_FRAME.pack(side=tk.TOP, padx = (70,0), pady = (0,10),fill = tk.X )
-        self.comboExample = ttk.Combobox(self.ADD_FRAME, values=["總清單", "播放清單1", "播放清單2", "播放清單3", "播放清單4", "播放清單5"], width = 15)
+        self.ADD_FRAME= tk.Frame(self.musiclist_top,bg = 'black')
+        self.ADD_FRAME.pack(side=tk.TOP, pady = (10,5))
+        self.comboExample = ttk.Combobox(self.ADD_FRAME, values=["總清單", "播放清單1", "播放清單2", "播放清單3", "播放清單4", "播放清單5"], width = 15,background = "gray")
         self.comboExample.current(0)
         self.comboExample.pack(side='left', padx=(0,30))
-        self.buttonaddmusic=tk.Button(self.ADD_FRAME,text="增加音樂",command=self.addNewMusic,width=6,height=1,bg='#FFEC8B')
-        self.buttondelete=tk.Button(self.ADD_FRAME,text="刪除音樂",command=self.deleteMusic,width=6,height=1,bg='#FFEC8B')
+        self.buttonaddmusic=tk.Button(self.ADD_FRAME,text="增加音樂",command=self.addNewMusic,width=6,height=1,bg='black', foreground="white")
+        self.buttondelete=tk.Button(self.ADD_FRAME,text="刪除音樂",command=self.deleteMusic,width=6,height=1,bg='black', foreground="white")
         self.buttondelete.pack(side=tk.LEFT, padx=(25,0))
                                     
         self.addMusicName()
@@ -65,28 +75,28 @@ class MusicButtonControl(tk.Frame):
         self.loadMusic()
         print("======音樂加載完成")
     
-
-     
-        #self.buttonPlay= tk.Button(self.frame,text="播放",command=self.playMusic,width=5.height=2,bg='#FFEC8B') 
-        self.buttonPlay= tk.Button(self.frame,text="播放",command=self.playMusic,width=6,height=2,bg='#FFEC8B')
-        self.buttonPause= tk.Button(self.frame,text="暂停/繼續",command=self.pauseMusic,width=6,height=2,bg='#FFEC8B')     
-        self.buttonStop= tk.Button(self.frame,text="停止",command=self.stopMusic,width=6,height=2,bg='#FFEC8B')    
-        self.buttonPrevious= tk.Button(self.frame,text="上一曲",command=self.previousMusic,width=6,height=2,bg='#FFEC8B')
-        self.buttonNext= tk.Button(self.frame,text="下一曲",command=self.nextMusic,width=6,height=2,bg='#FFEC8B')
-        self.scalevolume= tk.Scale(self.frame,from_=0, to=100, orient=tk.HORIZONTAL,showvalue=1, command=self.plus)                           
+        pygame.mixer.music.set_volume(0)
         
-        self.buttonPlay.pack(side=tk.LEFT)
-        self.buttonPause.pack(side=tk.LEFT)
-        self.buttonStop.pack(side=tk.LEFT)
+        self.decorate_line = tk.Label(self.frame0, text = "__________________________________________________________", bg='black', foreground="white")
+        self.decorate_line.pack(anchor = tk.N, pady = (0,10))
+        #self.buttonPlay= tk.Button(self.frame,text="播放",command=self.playMusic,width=5.height=2,bg='#FFEC8B') 
+        self.buttonPlay= tk.Button(self.frame,image=self.play_image,command=self.playMusic,width=25,height=25,bg='black', foreground="white")
+        self.buttonPause= tk.Button(self.frame,image=self.pause_image,command=self.pauseMusic,width=25,height=25,bg='black', foreground="white")     
+        self.buttonStop= tk.Button(self.frame,image=self.stop_image,command=self.stopMusic,width=25,height=25,bg='black', foreground="white")    
+        self.buttonPrevious= tk.Button(self.frame,image=self.previous_image,command=self.previousMusic,width=25,height=25,bg='black', foreground="white")
+        self.buttonNext= tk.Button(self.frame,image=self.next_image,command=self.nextMusic,width=30,height=25,bg='black', foreground="white")
+        self.scalevolume= tk.Scale(self.frame0,from_=0, to=100, orient=tk.HORIZONTAL,length = 200,showvalue=1, command=self.plus,bg='black', foreground="white")                           
+        
         self.buttonPrevious.pack(side=tk.LEFT)
-        self.buttonNext.pack(side=tk.LEFT)
-        self.scalevolume.pack(side=tk.LEFT)
+        self.buttonPlay.pack(side=tk.LEFT, padx = (25,0))
+        self.buttonPause.pack(side=tk.LEFT, padx = (35,0))
+        self.buttonStop.pack(side=tk.LEFT, padx = (25,0))
+        self.buttonNext.pack(side=tk.LEFT, padx = (25,0))
         #self.buttonLess.pack(side=tk.LEFT)
         
         big_button_Style = ttk.Style ()
         big_button_Style.configure("big.TButton", font = ('Arial','10'))
-        
-        
+                
         #self.musiclist1= ttk.Button(self.musiclist_top,text="總清單",command=lambda: self.switch_list(1),width=10,  style = "big.TButton")
         #self.musiclist2= ttk.Button(self.musiclist_top,text="播放清單2",command=lambda: self.switch_list(2),width=10,  style = "big.TButton")
         #self.musiclist3= ttk.Button(self.musiclist_top,text="播放清單3",command=lambda: self.switch_list(3),width=10,  style = "big.TButton")
@@ -105,11 +115,12 @@ class MusicButtonControl(tk.Frame):
         
             
                                       
-        var_mode = tk.IntVar()
-        self.randomplay=tk.Radiobutton(self.frame0,variable = var_mode,value = 1,text ="隨機播放",command =self.randomplay )
-        self.randomplay.pack(side=tk.LEFT)
-        self.inturnplay=tk.Radiobutton(self.frame0,variable = var_mode,value = 2,text ="循序播放",command =self.inturnplay )
+        #var_mode = tk.IntVar()
+        self.randomplay=tk.Button(self.frame0,image =self.random_image,command =self.randomplay,width=55,height=30,bg='black', foreground="white")
+        self.inturnplay=tk.Button(self.frame0,image =self.circle_image,command =self.inturnplay,width=60,height=30,bg='black', foreground="white")
         self.inturnplay.pack(side=tk.LEFT)
+        self.scalevolume.pack(side=tk.LEFT)       
+        self.randomplay.pack(side=tk.LEFT)
         
        
             
@@ -355,15 +366,20 @@ class MusicButtonControl(tk.Frame):
     def randomplay(self):
         global randomPlay
         randomPlay=1
+        self.randomplay.config(bg='white',foreground="black")
+        self.inturnplay.config(bg='black',foreground="white")
         
     def inturnplay(self):
         global randomPlay
         randomPlay=0
+        self.inturnplay.config(bg='white',foreground="black")
+        self.randomplay.config(bg='black',foreground="white")
         
     def show_musicbuttoncontrol(self):
+        self.frame1.pack(side=tk.TOP,fill = tk.X)
         self.frame.pack(side=tk.TOP)
         self.frame0.pack(side=tk.TOP)
-        self.frame1.pack(side=tk.TOP,fill = tk.X)
+        self.ADD_FRAME.pack(side=tk.TOP, pady = (10,5))
         
     def hide_musicbuttoncontrol(self):
         self.frame.pack_forget()
@@ -375,12 +391,9 @@ class MusicButtonControl(tk.Frame):
     def addNewMusic(self):
         
         
+        self.ADD_FRAME.pack_forget()
         self.frame.pack_forget()
         self.frame0.pack_forget()
-        self.addnewmusic.pack_forget()
-        self.musiclist_top.pack_forget()
-        self.musiclist_bottom.pack_forget()
-        self.comboExample.pack_forget()
         #self.musiclist1.pack_forget()
         #self.musiclist2.pack_forget()
         #self.musiclist3.pack_forget()
@@ -388,7 +401,7 @@ class MusicButtonControl(tk.Frame):
         #self.musiclist5.pack_forget()
         #self.musiclist6.pack_forget()
         self.listBox.pack_forget()
-        self.listBox.pack(side=tk.LEFT)
+        self.listBox.pack(side=tk.TOP)
         self.addMusicNameitem()
         if (self.listBox.size()!=0):
             self.addmusic=tk.Button(self.frame1,text="新增",command=self.AddMusic,width=8,height=2,bg='#FFEC8B')
@@ -399,12 +412,9 @@ class MusicButtonControl(tk.Frame):
     def deleteMusic(self):
         
         
+        self.ADD_FRAME.pack_forget()
         self.frame.pack_forget()
         self.frame0.pack_forget()
-        self.addnewmusic.pack_forget()
-        self.musiclist_top.pack_forget()
-        self.musiclist_bottom.pack_forget()
-        self.comboExample.pack_forget()
         #self.musiclist1.pack_forget()
         #self.musiclist2.pack_forget()
         #self.musiclist3.pack_forget()
@@ -412,7 +422,7 @@ class MusicButtonControl(tk.Frame):
         #self.musiclist5.pack_forget()
         #self.musiclist6.pack_forget()
         self.listBox.pack_forget()
-        self.listBox.pack(side=tk.LEFT)
+        self.listBox.pack(side=tk.TOP)
         self.refreshMusiclist()
         if (self.listBox.size()!=0):
             self.addmusic=tk.Button(self.frame1,text="刪除",command=self.deleteMusicitem,width=8,height=2,bg='#FFEC8B')
@@ -457,27 +467,18 @@ class MusicButtonControl(tk.Frame):
         if(touch>0):
             self.test_label.pack_forget()
         touch=0
-        self.listBox.pack_forget()
         self.exit.pack_forget()
-        self.frame1.pack_forget()
-        self.frame.pack(anchor= tk.N,fill=tk.X)
-        self.frame0.pack(side=tk.TOP,fill=tk.X)
-        self.frame1.pack(side=tk.TOP,fill=tk.X)
-        self.musiclist_top.pack(side=tk.TOP,fill=tk.X)
-        self.musiclist_bottom.pack(side=tk.TOP)
-        self.listBox.pack(side=tk.LEFT)
+        self.hide_musicbuttoncontrol()
+        self.show_musicbuttoncontrol()
         self.refreshMusiclist()
-        self.comboExample.pack(side='left', padx=20)
         #self.musiclist1.pack(side='left', padx=20)
         #self.musiclist2.pack(side='left', padx=20)
         #self.musiclist3.pack(side='left', padx=20)
         #self.musiclist4.pack(side='left', padx=20)
         #self.musiclist5.pack(side='left', padx=20)
         #self.musiclist6.pack(side='left', padx=20)
-        self.addnewmusic.pack(side=tk.BOTTOM)
+        #self.addnewmusic.pack(side=tk.BOTTOM)
         self.addmusic.pack_forget()
-        self.addmusic.pack_forget()
-        self.exit.pack_forget()
             
         
         

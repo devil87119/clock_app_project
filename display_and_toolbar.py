@@ -14,6 +14,8 @@ from musicList import MusicList
 from musicButtonControl import *
 from weather_page import *
 from FMpage import *
+from Calendarpage import *
+from PIL import ImageTk,Image
 import pygame
 import time
 import threading
@@ -47,7 +49,10 @@ class Display:
         #main frame
         self.main_frame = tk.Frame(self.big_frame)#, borderwidth=2, relief="groove")#, highlightcolor="green", highlightthickness=5
         self.main_frame.pack(anchor = tk.N, fill=tk.BOTH,expand = True)
-        
+                
+        self.main_frame.config(bg = 'black')
+        self.tool_frame.config(bg = 'black')
+        self.big_frame.config(bg = 'black')
         
         self.weather = Weather("Taipei")
         self.homepage = Homepage(self.root, self.main_frame,self.root_height,self.weather)             
@@ -56,11 +61,12 @@ class Display:
         self.alarm = Alarm(self.root, self.main_frame,self.root_height,self.musicList)
         self.FMpage = FMpage(self.root, self.main_frame, self.root_height)  
         self.weather_page = weather_page(self.root, self.main_frame,self.root_height,self.weather)
-        self.toolbar = Toolbar(self.root, self.tool_frame, self.homepage, self.alarm, self.musicButtonControl, self.FMpage, self.weather_page, self.root_height)
+        self.CalendarPage = CalendarPage(self.root, self.main_frame, self.root_height)        
+        self.toolbar = Toolbar(self.root, self.tool_frame, self.homepage, self.alarm, self.musicButtonControl, self.FMpage, self.weather_page, self.CalendarPage, self.root_height)
     
 
 class Toolbar():
-    def __init__(self, root, tool_frame, homepage, alarm, musicButtonControl, FMpage, weather_page, root_height):   
+    def __init__(self, root, tool_frame, homepage, alarm, musicButtonControl, FMpage, weather_page, CalendarPage, root_height):   
         #set button x,y 
         self.button_X = 0
         self.root_height = root_height
@@ -70,13 +76,17 @@ class Toolbar():
         self.musicButtonControl = musicButtonControl
         self.FMpage = FMpage
         self.weather_page = weather_page
+        self.CalendarPage = CalendarPage
         self.tool_frame=tool_frame
+        
+        self.alarm_image=ImageTk.PhotoImage(Image.open('picture/alarm (1).png'))
+
         
         #toolbar button
         self.Main_page=tk.Button(self.root, text="MAIN", command=lambda: self.switch_page(0), width=6, height=2)
         self.FM_page=tk.Button(self.root, text="FM", command=lambda: self.switch_page(1), width=6, height=2)
         self.Music_page=tk.Button(self.root, text="Music", command=lambda: self.switch_page(2), width=6, height=2)
-        self.Alarm_page=tk.Button(self.root, text="Alarm", command=lambda: self.switch_page(3), width=6, height=2)
+        self.Alarm_page=tk.Button(self.root, image = self.alarm_image, command=lambda: self.switch_page(3), width=60)
         self.Scedule_page=tk.Button(self.root, text="Scedule", command=lambda: self.switch_page(4), width=6, height=2)
         self.Weather_page=tk.Button(self.root, text="Weather", command=lambda: self.switch_page(5), width=6, height=2)
         self.Game_page=tk.Button(self.root, text="Game", command=lambda: self.switch_page(6), width=6, height=2)
@@ -113,6 +123,7 @@ class Toolbar():
         song_animation_start = 0
         alarm_ID = 0
         temp_sel_musicList = "總清單"
+        start_alarm=0
         while(1):
             #hide or show toolbar 
             if(count%2 == 1):
@@ -122,7 +133,8 @@ class Toolbar():
     
             if(now_page==0):#homepage animation
                 self.homepage.time()
-                self.homepage.refresh_weather()                 
+                if(run_time == 0):
+                    self.homepage.refresh_weather()                 
             
             elif(now_page == 1):
                self.FMpage.FM.FM_code = self.FMpage.FMlist.curselection()
@@ -162,24 +174,32 @@ class Toolbar():
                     if(song_point==len(s1)+1):
                         song_point=0
                         song_animation_start = 0
-                self.alarm.FMtime()                
+                self.alarm.FMtime()          
+            
+            elif(now_page == 4):
+             self.CalendarPage.time()
+             if self.CalendarPage.selmonth != int(self.CalendarPage.vMonth.get()):
+                 self.CalendarPage.selmonth = int(self.CalendarPage.vMonth.get())
+                 self.CalendarPage.updateDate()
             
             m = 0
-            if self.alarm.setting_zone == 0:
-                flag = m
-                flag = self.alarm.Alarming()
-                if flag == 0:
-                    m = flag
-            
-            if self.alarm.ring_state == 1:
-                self.alarm.ring_label.config(text=" "+"".join(self.alarm.alarm_Name[flag])+" 正在響鈴")
-                self.switch_page(8)
-            if self.alarm.ring_state == 2:
-                print("123")
-                self.alarm.ring_frame.pack_forget()
-                self.switch_page(now_page)
-                self.alarm.ring_state = 0
-            
+            if(start_alarm or run_time == 199):
+                if self.alarm.setting_zone == 0:
+                    flag = m
+                    flag = self.alarm.Alarming()
+                    if flag == 0:
+                        m = flag
+                
+                if self.alarm.ring_state == 1:
+                    self.alarm.ring_label.config(text=" "+"".join(self.alarm.alarm_Name[flag])+" 正在響鈴")
+                    self.switch_page(8)
+                elif self.alarm.ring_state == 2:
+                    print("123")
+                    self.alarm.ring_frame.pack_forget()
+                    self.switch_page(now_page)
+                    self.alarm.ring_state = 0
+                start_alarm = 1
+                
             
             #self.test()   
             
@@ -200,7 +220,10 @@ class Toolbar():
             #self.musicList.hide_musiclist()
             self.musicButtonControl.hide_musicbuttoncontrol()
         elif(now_page == 3):
-            self.alarm.hide_alarm()            
+            self.alarm.hide_alarm()     
+        elif(now_page == 4):
+            self.CalendarPage.close_setting()
+            self.CalendarPage.hide_calendarpage()       
         elif(now_page == 5):
             self.weather_page.hide_weather_page()
             
@@ -214,7 +237,9 @@ class Toolbar():
         elif(page_ID == 3):
             self.alarm.show_alarm()
         elif(page_ID == 5):
-            self.weather_page.show_weather_page()        
+            self.weather_page.show_weather_page()  
+        elif(page_ID == 4):
+            self.CalendarPage.show_calendarpage()      
         elif(page_ID == 8):
             self.alarm.ring_frame.pack(side = "top",pady = (100,0))
           
@@ -229,13 +254,13 @@ class Toolbar():
         
     def refresh(self):
         self.Main_page.place(x=self.button_X,y = 1)
-        self.FM_page.place(x=self.button_X,y = self.root_height/8+1)
-        self.Music_page.place(x=self.button_X,y = self.root_height*2/8+1)
-        self.Alarm_page.place(x=self.button_X,y = self.root_height*3/8+1)
-        self.Scedule_page.place(x=self.button_X,y = self.root_height*4/8+1)
-        self.Weather_page.place(x=self.button_X,y = self.root_height*5/8+1)
-        self.Game_page.place(x=self.button_X,y = self.root_height*6/8+1)
-        self.Setting_page.place(x=self.button_X,y = self.root_height*7/8+1)
+        self.FM_page.place(x=self.button_X,y = self.root_height/6+1)
+        self.Music_page.place(x=self.button_X,y = self.root_height*2/6+1)
+        self.Alarm_page.place(x=self.button_X,y = self.root_height*3/6+1)
+        self.Scedule_page.place(x=self.button_X,y = self.root_height*4/6+1)
+        self.Weather_page.place(x=self.button_X,y = self.root_height*5/6+1)
+        #self.Game_page.place(x=self.button_X,y = self.root_height*6/8+1)
+        #self.Setting_page.place(x=self.button_X,y = self.root_height*7/8+1)
         self.show_button.pack(side='left', padx = (self.button_X+52,0))        
         
     def hide(self):        

@@ -34,6 +34,14 @@ class Alarm:
         self.N_ringing = dict()#正在響鈴
         self.setting_zone = 0#正在設定
         
+        
+        self.gui_style = ttk.Style()
+        self.gui_style.configure('black.TFrame', foreground='white', background = 'black')
+        self.gui_style.configure('black.TLabel', foreground='white', background = 'black')
+        
+        self.R_style = ttk.Style()
+        self.R_style.configure('Radio_style.TRadiobutton', foreground='white', background = 'black')
+        
         for i in range(6):
             self.N_ringing[i] = 0
         
@@ -45,30 +53,31 @@ class Alarm:
         self.alarm_temp_sec[0]=0
         self.now_detail_alarmID = 0
                 
-        self.setting_frame= ttk.Frame(self.main_frame)
+        self.setting_frame= ttk.Frame(self.main_frame, style = 'black.TFrame')
         self.setting_frame.pack(side='top', fill=tk.BOTH)
         
         self.N_alarm = 0
         #alarm 1~6 frame
-        self.alarm_frame = ttk.Frame(self.setting_frame)
+        self.alarm_frame = ttk.Frame(self.setting_frame, style = 'black.TFrame')
         
         #alarm 1~6 frame
-        self.alarm_top_frame = ttk.Frame(self.alarm_frame)        
+        self.alarm_top_frame = ttk.Frame(self.alarm_frame, style = 'black.TFrame')        
         self.alarm_top_frame.pack(anchor=tk.S)
         
         #alarm 1~6 frame
-        self.alarm_low_frame = ttk.Frame(self.alarm_frame)        
+        self.alarm_low_frame = ttk.Frame(self.alarm_frame, style = 'black.TFrame')        
         self.alarm_low_frame.pack(anchor=tk.S, pady=(0,0))
         
         #alarm 1~6 init
         big_button_Style = ttk.Style ()
         big_button_Style.configure("big.TButton", font = ('Arial','10'))
-        self.Alarm1=ttk.Button(self.alarm_top_frame, text="Alarm 1", command=lambda: self.switch(0), width=10, style = "big.TButton")
-        self.Alarm2=ttk.Button(self.alarm_top_frame, text="Alarm 2", command=lambda: self.switch(1), width=10, style = "big.TButton")
-        self.Alarm3=ttk.Button(self.alarm_top_frame, text="Alarm 3", command=lambda: self.switch(2), width=10, style = "big.TButton")
-        self.Alarm4=ttk.Button(self.alarm_low_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, style = "big.TButton")
-        self.Alarm5=ttk.Button(self.alarm_low_frame, text="Alarm 5", command=lambda: self.switch(4), width=10, style = "big.TButton")
-        self.Alarm6=ttk.Button(self.alarm_low_frame, text="Alarm 6", command=lambda: self.switch(5), width=10, style = "big.TButton")
+        big_button_Style.map('big.TButton', foreground = [('pressed','SlateBlue3'),('active', 'black'),('!disabled','white')], background = [('pressed','red'),('active', 'red'),('!disabled','red')]) 
+        self.Alarm1=tk.Button(self.alarm_top_frame, text="Alarm 1", command=lambda: self.switch(0), width=10, bg = 'black', foreground = 'white')
+        self.Alarm2=tk.Button(self.alarm_top_frame, text="Alarm 2", command=lambda: self.switch(1), width=10, bg = 'black', foreground = 'white')
+        self.Alarm3=tk.Button(self.alarm_top_frame, text="Alarm 3", command=lambda: self.switch(2), width=10, bg = 'black', foreground = 'white')
+        self.Alarm4=tk.Button(self.alarm_low_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, bg = 'black', foreground = 'white')
+        self.Alarm5=tk.Button(self.alarm_low_frame, text="Alarm 5", command=lambda: self.switch(4), width=10, bg = 'black', foreground = 'white')
+        self.Alarm6=tk.Button(self.alarm_low_frame, text="Alarm 6", command=lambda: self.switch(5), width=10, bg = 'black', foreground = 'white')
         
         #place alarm 1~6 init        
         self.Alarm1.pack(side='left', padx=20,pady=(0,10))
@@ -81,96 +90,96 @@ class Alarm:
         self.init_alarm()
         
         #time
-        self.time_label=tk.Label(self.root, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",10))
+        self.time_label=tk.Label(self.root, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",10), background = 'black', foreground = 'white')
         self.time_label.place(y = 2, x = self.root_width - 60 )
         
         #detail of alarm
         ttk.Style().configure('Font.TLabelframe.Label', font = '25')#, foreground = "red"
-        self.detail_frame = ttk.Frame(self.setting_frame, borderwidth=2, relief="groove", style = "Font.TLabelframe")#, highlightcolor="green", highlightthickness=5
+        self.detail_frame = ttk.Frame(self.setting_frame, borderwidth=2, relief="groove", style = 'black.TFrame')#, highlightcolor="green", highlightthickness=5
         self.detail_frame.pack(anchor=tk.NW,pady=(2, 0),padx=(10,10))
         self.alarm_frame.pack(anchor=tk.CENTER,pady=(2, 0))
         
         #left detial frame
-        self.left_frame = ttk.Frame(self.detail_frame)        
+        self.left_frame = ttk.Frame(self.detail_frame, style = 'black.TFrame')        
         self.left_frame.pack(side = 'left')
         
         #Right detial frame
-        self.right_frame = ttk.Frame(self.detail_frame)        
+        self.right_frame = ttk.Frame(self.detail_frame, style = 'black.TFrame')        
         self.right_frame.pack(side = 'top', padx = (10,0))
         
         #on off frame
-        self.activate_frame = ttk.Frame(self.left_frame)        
+        self.activate_frame = ttk.Frame(self.left_frame, style = 'black.TFrame')        
         self.activate_frame.pack(anchor=tk.NW, padx = 10,pady=(2,0), expand = True, fill = tk.X) 
         
         #alarm name
-        self.Alarm_name_label = ttk.Label(self.activate_frame, text = "".join(self.alarm_Name[0]), font=("Arial",14 ))        
+        self.Alarm_name_label = ttk.Label(self.activate_frame, text = "".join(self.alarm_Name[0]), font=("Arial",14 ), style = 'black.TLabel')        
         self.Alarm_name_label.pack(side ="left",pady = (0,0))
                                        
         #ON/OFF   
         self.on = tk.IntVar()
         self.on.set(self.alarm_activate[0]) 
-        self.ON_OFF_1 = ttk.Radiobutton(self.activate_frame, text="ON", variable=self.on, value=0, command=lambda: self.set_ONOFF(0))
-        self.ON_OFF_2 = ttk.Radiobutton(self.activate_frame, text="OFF", variable=self.on, value=1, command=lambda: self.set_ONOFF(1))
+        self.ON_OFF_1 = ttk.Radiobutton(self.activate_frame, text="ON", variable=self.on, value=0, command=lambda: self.set_ONOFF(0), style = 'Radio_style.TRadiobutton')
+        self.ON_OFF_2 = ttk.Radiobutton(self.activate_frame, text="OFF", variable=self.on, value=1, command=lambda: self.set_ONOFF(1), style = 'Radio_style.TRadiobutton')
         self.ON_OFF_2.pack(side ="right")
         self.ON_OFF_1.pack(side ="right")
         
         #time_frame
-        self.time_frame = ttk.Frame(self.left_frame)        
+        self.time_frame = ttk.Frame(self.left_frame, style = 'black.TFrame')        
         self.time_frame.pack(anchor=tk.NW, pady = (0,0))
         
         
         #time top button frame
-        self.time_plus_frame = ttk.Frame(self.time_frame)        
+        self.time_plus_frame = ttk.Frame(self.time_frame, style = 'black.TFrame')        
         self.time_plus_frame.pack(side='left')
         
         #plus time
         little_button_Style = ttk.Style ()
         little_button_Style.configure("little.TButton", font = ('Sans','10'))
-        self.alarm_plus_hour = ttk.Button(self.time_plus_frame, text="+", command=lambda: self.adjust_alarm(0,1), width=2, style = "little.TButton")
+        self.alarm_plus_hour = tk.Button(self.time_plus_frame, text="+", command=lambda: self.adjust_alarm(0,1), width=2, bg = 'black', foreground = 'white')
         self.alarm_plus_hour.pack(anchor=tk.NW)
-        self.alarm_minus_hour = ttk.Button(self.time_plus_frame, text="-", command=lambda: self.adjust_alarm(0,-1), width=2, style = "little.TButton")
+        self.alarm_minus_hour = tk.Button(self.time_plus_frame, text="-", command=lambda: self.adjust_alarm(0,-1), width=2, bg = 'black', foreground = 'white')
         self.alarm_minus_hour.pack(anchor=tk.NW)                
         
         #set alarm time         
-        self.alarm_set_hour = tk.Label(self.time_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",36))
+        self.alarm_set_hour = tk.Label(self.time_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",36), bg = 'black', foreground = 'white')
         self.alarm_set_hour.pack(side='left')        
         
         #time bottom button frame
-        self.time_minus_frame = ttk.Frame(self.time_frame)        
+        self.time_minus_frame = ttk.Frame(self.time_frame, style = 'black.TFrame')        
         self.time_minus_frame.pack(side='left')
         
         #minus time
-        self.alarm_plus_hour = ttk.Button(self.time_minus_frame, text="+", command=lambda: self.adjust_alarm(1,1), width=2, style = "little.TButton")
+        self.alarm_plus_hour = tk.Button(self.time_minus_frame, text="+", command=lambda: self.adjust_alarm(1,1), width=2, bg = 'black', foreground = 'white')
         self.alarm_plus_hour.pack(anchor=tk.NW, padx = 0)        
-        self.alarm_minus_hour = ttk.Button(self.time_minus_frame, text="-", command=lambda: self.adjust_alarm(1,-1), width=2, style = "little.TButton")
+        self.alarm_minus_hour = tk.Button(self.time_minus_frame, text="-", command=lambda: self.adjust_alarm(1,-1), width=2, bg = 'black', foreground = 'white')
         self.alarm_minus_hour.pack(anchor=tk.NW, padx = 0)
         
         #鬧鐘持續時間
-        self.ringing_time_label = ttk.Label(self.left_frame, text = "鬧鐘持續時間", font=("Arial",10))        
+        self.ringing_time_label = ttk.Label(self.left_frame, text = "鬧鐘持續時間", font=("Arial",10), style = 'black.TLabel')        
         self.ringing_time_label.pack(anchor=tk.NW, pady = (0,0))
         
         #ringing time frame
-        self.ring_time_frame = ttk.Frame(self.left_frame)        
+        self.ring_time_frame = ttk.Frame(self.left_frame, style = 'black.TFrame')        
         self.ring_time_frame.pack(anchor=tk.NW, padx = 10)                
         
         #ringing time option
         self.v = tk.IntVar()
         self.v.set(self.alarm_RingTime[0]) 
-        self.ringtime_1 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[0])+"s", variable=self.v, value=0, command=lambda: self.set_ring_time(0))
-        self.ringtime_2 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[1])+"s", variable=self.v, value=1, command=lambda: self.set_ring_time(1))
-        self.ringtime_3 = ttk.Radiobutton(self.ring_time_frame, text="1m", variable=self.v, value=2, command=lambda: self.set_ring_time(2))
-        self.ringtime_4 = ttk.Radiobutton(self.ring_time_frame, text="2m", variable=self.v, value=3, command=lambda: self.set_ring_time(3))
+        self.ringtime_1 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[0])+"s", variable=self.v, value=0, command=lambda: self.set_ring_time(0), style = 'Radio_style.TRadiobutton')
+        self.ringtime_2 = ttk.Radiobutton(self.ring_time_frame, text=str(self.alarm_ring_time[1])+"s", variable=self.v, value=1, command=lambda: self.set_ring_time(1), style = 'Radio_style.TRadiobutton')
+        self.ringtime_3 = ttk.Radiobutton(self.ring_time_frame, text="1m", variable=self.v, value=2, command=lambda: self.set_ring_time(2), style = 'Radio_style.TRadiobutton')
+        self.ringtime_4 = ttk.Radiobutton(self.ring_time_frame, text="2m", variable=self.v, value=3, command=lambda: self.set_ring_time(3), style = 'Radio_style.TRadiobutton')
         self.ringtime_1.pack(side='left')
         self.ringtime_2.pack(side='left')
         self.ringtime_3.pack(side='left')
         self.ringtime_4.pack(side='left')
         
         #鬧鐘重複次數
-        self.alarm_repeat_label = ttk.Label(self.left_frame, text = "鬧鐘重複次數", font=("Arial",10))        
+        self.alarm_repeat_label = ttk.Label(self.left_frame, text = "鬧鐘重複次數", font=("Arial",10), style = 'black.TLabel')        
         self.alarm_repeat_label.pack(anchor=tk.NW, pady = (1,0))  
         
         #repeat time frame
-        self.repeat_frame = ttk.Frame(self.left_frame)        
+        self.repeat_frame = ttk.Frame(self.left_frame, style = 'black.TFrame')        
         self.repeat_frame.pack(anchor=tk.NW, padx = 10)              
         
         #repeat time option
@@ -195,14 +204,14 @@ class Alarm:
         self.w5.set(self.week_code//2) 
         self.week_code%=2
         self.w6.set(self.week_code//1) 
-        self.week_frame = ttk.Frame(self.left_frame)
-        self.repeattime_1 = ttk.Checkbutton(self.repeat_frame, text=" 日 ", variable=self.w0, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(0))
-        self.repeattime_2 = ttk.Checkbutton(self.repeat_frame, text=" 一 ", variable=self.w1, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(1))
-        self.repeattime_3 = ttk.Checkbutton(self.repeat_frame, text=" 二 ", variable=self.w2, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(2))
-        self.repeattime_4 = ttk.Checkbutton(self.repeat_frame, text=" 三 ", variable=self.w3, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(3))
-        self.repeattime_5 = ttk.Checkbutton(self.week_frame, text=" 四 ", variable=self.w4, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(4))
-        self.repeattime_6 = ttk.Checkbutton(self.week_frame, text=" 五 ", variable=self.w5, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(5))
-        self.repeattime_7 = ttk.Checkbutton(self.week_frame, text=" 六 ", variable=self.w6, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(6))
+        self.week_frame = ttk.Frame(self.left_frame, style = 'black.TFrame')
+        self.repeattime_1 = ttk.Checkbutton(self.repeat_frame, text=" 日 ", variable=self.w0, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(0), style = 'Radio_style.TRadiobutton')
+        self.repeattime_2 = ttk.Checkbutton(self.repeat_frame, text=" 一 ", variable=self.w1, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(1), style = 'Radio_style.TRadiobutton')
+        self.repeattime_3 = ttk.Checkbutton(self.repeat_frame, text=" 二 ", variable=self.w2, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(2), style = 'Radio_style.TRadiobutton')
+        self.repeattime_4 = ttk.Checkbutton(self.repeat_frame, text=" 三 ", variable=self.w3, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(3), style = 'Radio_style.TRadiobutton')
+        self.repeattime_5 = ttk.Checkbutton(self.week_frame, text=" 四 ", variable=self.w4, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(4), style = 'Radio_style.TRadiobutton')
+        self.repeattime_6 = ttk.Checkbutton(self.week_frame, text=" 五 ", variable=self.w5, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(5), style = 'Radio_style.TRadiobutton')
+        self.repeattime_7 = ttk.Checkbutton(self.week_frame, text=" 六 ", variable=self.w6, onvalue=1, offvalue=0, command=lambda: self.set_repeat_time(6), style = 'Radio_style.TRadiobutton')
         self.repeattime_1.pack(side='left')
         self.repeattime_2.pack(side='left')
         self.repeattime_3.pack(side='left')
@@ -213,16 +222,16 @@ class Alarm:
         self.repeattime_7.pack(side='left')
         
         #鬧鐘歌曲
-        self.alarm_song_label = ttk.Label(self.left_frame, text = "鬧鐘鈴聲", font=("Arial",10))        
+        self.alarm_song_label = ttk.Label(self.left_frame, text = "鬧鐘鈴聲", font=("Arial",10), style = 'black.TLabel')        
         self.alarm_song_label.pack(anchor=tk.NW, pady = (2,0))  
         self.now_song = ttk.Label(self.left_frame, text="".join(self.alarm_song[0]), width = 25, background = 'white')
         self.now_song.pack(anchor=tk.NW, padx = (10,0),pady = (0,2))
         
         #鬧鐘清單
-        self.alarm_song_label = ttk.Label(self.right_frame, text = "鬧鐘歌曲清單", font=("Arial",10))       
+        self.alarm_song_label = ttk.Label(self.right_frame, text = "鬧鐘歌曲清單", font=("Arial",10), style = 'black.TLabel')       
         self.alarm_song_label.pack(anchor=tk.NW, pady = (5,0))  
-        self.song_frame = tk.Frame(self.right_frame, height = 100)
-        self.scroll_frame = tk.Frame(self.song_frame, height = 100)
+        self.song_frame = ttk.Frame(self.right_frame, height = 100, style = 'black.TFrame')
+        self.scroll_frame = ttk.Frame(self.song_frame, height = 100, style = 'black.TFrame')
         self.scroll_frame.pack(side='right',expand=True,fill = tk.Y)
         self.song_frame.pack(anchor=tk.NW)       
         self.alarm_song_label.pack(anchor=tk.NW, pady = (5,0))  
@@ -239,149 +248,149 @@ class Alarm:
         self.listBox.bind('<Double-1>', self.change_ring)
         
         #function frame
-        self.function_frame = ttk.Frame(self.right_frame)        
+        self.function_frame = ttk.Frame(self.right_frame, style = 'black.TFrame')        
         self.function_frame.pack(anchor=tk.NE, padx = 0, fill=tk.X)   
-        self.cancel=ttk.Button(self.function_frame, text="取消離開", command=self.hide_setting, width=8, style = "big.TButton")
-        self.save=ttk.Button(self.function_frame, text="保存", command=self.save, width=4, style = "big.TButton")
+        self.cancel=tk.Button(self.function_frame, text="取消離開", command=self.hide_setting, width=8, bg = 'black', foreground = 'white')
+        self.save=tk.Button(self.function_frame, text="保存", command=self.save, width=4, bg = 'black', foreground = 'white')
         self.save.pack(side = "right")
         self.cancel.pack(side = "right")
-        self.alarm_tool_label = ttk.Label(self.function_frame, text = "未修改", font=("Arial",10))       
+        self.alarm_tool_label = ttk.Label(self.function_frame, text = "未修改", font=("Arial",10), style = 'black.TLabel')       
         self.alarm_tool_label.pack(side="left", padx = (10,0))
         
         #table frame        
-        self.table_frame = tk.Frame(self.main_frame) 
+        self.table_frame = tk.Frame(self.main_frame,bg = 'black') 
         self.table_frame.pack(side = "top")
         
         
         #head_frame
-        self.head_frame = tk.Frame(self.table_frame) 
-        self.head_frame.pack(side = "top", pady = (20,10))
+        self.head_frame = tk.Frame(self.table_frame,bg = 'black') 
+        self.head_frame.pack(side = "top", pady = (25,10))
         
         #every_alarm_frame 1
-        self.A1 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2 ) 
+        self.A1 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A1.pack(side = "left", padx = (0,10))
-        self.A1_sm_frame = tk.Frame(self.A1) 
+        self.A1_sm_frame = tk.Frame(self.A1, background = 'black') 
         self.A1_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A1_label = ttk.Label(self.A1_sm_frame, text = "".join(self.alarm_Name[0]), font=("Arial",10))
+        self.A1_label = ttk.Label(self.A1_sm_frame, text = "".join(self.alarm_Name[0]), font=("Arial",10), style = 'black.TLabel')
         self.A1_label.pack(side = "left")        
-        self.A1_ON_OFF_1 = ttk.Label(self.A1_sm_frame, text="ON" if self.alarm_activate[0] == 0 else "OFF", font=("Arial",12))
+        self.A1_ON_OFF_1 = ttk.Label(self.A1_sm_frame, text="ON" if self.alarm_activate[0] == 0 else "OFF", font=("Arial",12), style = 'black.TLabel')
         self.A1_ON_OFF_1.pack(side ="right")
-        self.A1_2_frame = tk.Frame(self.A1) 
+        self.A1_2_frame = tk.Frame(self.A1, background = 'black') 
         self.A1_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A1_time_label= ttk.Label(self.A1_2_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",16))
+        self.A1_time_label= ttk.Label(self.A1_2_frame, text=str(self.detail_hour[0]).zfill(2)+" : "+str(self.detail_min[0]).zfill(2), font=("Arial",16), style = 'black.TLabel')
         self.A1_time_label.pack(side = 'left') 
-        self.A1_week_label= ttk.Label(self.A1_2_frame, text="", font=("Arial",10))
+        self.A1_week_label= ttk.Label(self.A1_2_frame, text="", font=("Arial",10), style = 'black.TLabel')
         self.A1_week_label.pack(side = 'right')
         self.A1_song = ttk.Label(self.A1, text="".join(self.alarm_song[0]), width = 25, background = 'white')
         self.A1_song.pack(anchor=tk.NW)
         
         #every_alarm_frame 2
-        self.A2 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2 ) 
+        self.A2 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A2.pack(side = "left")
-        self.A2_sm_frame = tk.Frame(self.A2) 
+        self.A2_sm_frame = tk.Frame(self.A2, background = 'black') 
         self.A2_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A2_label = ttk.Label(self.A2_sm_frame, text = "".join(self.alarm_Name[1]), font=("Arial",10))
+        self.A2_label = ttk.Label(self.A2_sm_frame, style = 'black.TLabel', text = "".join(self.alarm_Name[1]), font=("Arial",10))
         self.A2_label.pack(side = "left")        
-        self.A2_ON_OFF_1 = ttk.Label(self.A2_sm_frame, text="ON" if self.alarm_activate[1] == 0 else "OFF", font=("Arial",12))
+        self.A2_ON_OFF_1 = ttk.Label(self.A2_sm_frame, style = 'black.TLabel', text="ON" if self.alarm_activate[1] == 0 else "OFF", font=("Arial",12))
         self.A2_ON_OFF_1.pack(side ="right")
-        self.A2_2_frame = tk.Frame(self.A2) 
+        self.A2_2_frame = tk.Frame(self.A2, background = 'black') 
         self.A2_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A2_time_label= ttk.Label(self.A2_2_frame, text=str(self.detail_hour[1]).zfill(2)+" : "+str(self.detail_min[1]).zfill(2), font=("Arial",16))
+        self.A2_time_label= ttk.Label(self.A2_2_frame, style = 'black.TLabel', text=str(self.detail_hour[1]).zfill(2)+" : "+str(self.detail_min[1]).zfill(2), font=("Arial",16))
         self.A2_time_label.pack(side = 'left') 
-        self.A2_week_label= ttk.Label(self.A2_2_frame, text="", font=("Arial",10))
+        self.A2_week_label= ttk.Label(self.A2_2_frame, style = 'black.TLabel', text="", font=("Arial",10))
         self.A2_week_label.pack(side = 'right') 
         self.A2_song = ttk.Label(self.A2, text="".join(self.alarm_song[1]), width = 25, background = 'white')
         self.A2_song.pack(anchor=tk.NW)
         
         #mid_frame
-        self.mid_frame = tk.Frame(self.table_frame) 
+        self.mid_frame = tk.Frame(self.table_frame,bg = 'black') 
         self.mid_frame.pack(side = "top", pady = (0,10))
         
         #every_alarm_frame 3
-        self.A3 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2 ) 
+        self.A3 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A3.pack(side = "left", padx = (0,10))
-        self.A3_sm_frame = tk.Frame(self.A3) 
+        self.A3_sm_frame = tk.Frame(self.A3, background = 'black') 
         self.A3_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A3_label = ttk.Label(self.A3_sm_frame, text = "".join(self.alarm_Name[2]), font=("Arial",10))
+        self.A3_label = ttk.Label(self.A3_sm_frame, style = 'black.TLabel', text = "".join(self.alarm_Name[2]), font=("Arial",10))
         self.A3_label.pack(side = "left")        
-        self.A3_ON_OFF_1 = ttk.Label(self.A3_sm_frame, text="ON" if self.alarm_activate[2] == 0 else "OFF", font=("Arial",12))
+        self.A3_ON_OFF_1 = ttk.Label(self.A3_sm_frame, style = 'black.TLabel', text="ON" if self.alarm_activate[2] == 0 else "OFF", font=("Arial",12))
         self.A3_ON_OFF_1.pack(side ="right")
-        self.A3_2_frame = tk.Frame(self.A3) 
+        self.A3_2_frame = tk.Frame(self.A3, background = 'black') 
         self.A3_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A3_time_label= ttk.Label(self.A3_2_frame, text=str(self.detail_hour[2]).zfill(2)+" : "+str(self.detail_min[2]).zfill(2), font=("Arial",16))
+        self.A3_time_label= ttk.Label(self.A3_2_frame, style = 'black.TLabel', text=str(self.detail_hour[2]).zfill(2)+" : "+str(self.detail_min[2]).zfill(2), font=("Arial",16))
         self.A3_time_label.pack(side = 'left') 
-        self.A3_week_label= ttk.Label(self.A3_2_frame, text="", font=("Arial",10))
+        self.A3_week_label= ttk.Label(self.A3_2_frame, style = 'black.TLabel', text="", font=("Arial",10))
         self.A3_week_label.pack(side = 'right')  
         self.A3_song = ttk.Label(self.A3, text="".join(self.alarm_song[2]), width = 25, background = 'white')
         self.A3_song.pack(anchor=tk.NW)
         
         #every_alarm_frame 4
-        self.A4 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2 ) 
+        self.A4 = tk.Frame(self.mid_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A4.pack(side = "left")
-        self.A4_sm_frame = tk.Frame(self.A4) 
+        self.A4_sm_frame = tk.Frame(self.A4, background = 'black') 
         self.A4_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A4_label = ttk.Label(self.A4_sm_frame, text = "".join(self.alarm_Name[3]), font=("Arial",10))
+        self.A4_label = ttk.Label(self.A4_sm_frame, style = 'black.TLabel', text = "".join(self.alarm_Name[3]), font=("Arial",10))
         self.A4_label.pack(side = "left")        
-        self.A4_ON_OFF_1 = ttk.Label(self.A4_sm_frame, text="ON" if self.alarm_activate[3] == 0 else "OFF", font=("Arial",12))
+        self.A4_ON_OFF_1 = ttk.Label(self.A4_sm_frame, style = 'black.TLabel', text="ON" if self.alarm_activate[3] == 0 else "OFF", font=("Arial",12))
         self.A4_ON_OFF_1.pack(side ="right")
-        self.A4_2_frame = tk.Frame(self.A4) 
+        self.A4_2_frame = tk.Frame(self.A4, background = 'black') 
         self.A4_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A4_time_label= ttk.Label(self.A4_2_frame, text=str(self.detail_hour[3]).zfill(2)+" : "+str(self.detail_min[3]).zfill(2), font=("Arial",16))
+        self.A4_time_label= ttk.Label(self.A4_2_frame, style = 'black.TLabel', text=str(self.detail_hour[3]).zfill(2)+" : "+str(self.detail_min[3]).zfill(2), font=("Arial",16))
         self.A4_time_label.pack(side = 'left') 
-        self.A4_week_label= ttk.Label(self.A4_2_frame, text="", font=("Arial",10))
+        self.A4_week_label= ttk.Label(self.A4_2_frame, style = 'black.TLabel', text="", font=("Arial",10))
         self.A4_week_label.pack(side = 'right')
         self.A4_song = ttk.Label(self.A4, text="".join(self.alarm_song[3]), width = 25, background = 'white')
         self.A4_song.pack(anchor=tk.NW)
         
         
         #mid_frame
-        self.ft_frame = tk.Frame(self.table_frame) 
+        self.ft_frame = tk.Frame(self.table_frame,bg = 'black') 
         self.ft_frame.pack(side = "top")
         
         #every_alarm_frame 5
-        self.A5 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2 ) 
+        self.A5 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A5.pack(side = "left", padx = (0,10))
-        self.A5_sm_frame = tk.Frame(self.A5) 
+        self.A5_sm_frame = tk.Frame(self.A5, background = 'black') 
         self.A5_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A5_label = ttk.Label(self.A5_sm_frame, text = "".join(self.alarm_Name[4]), font=("Arial",10))
+        self.A5_label = ttk.Label(self.A5_sm_frame, style = 'black.TLabel', text = "".join(self.alarm_Name[4]), font=("Arial",10))
         self.A5_label.pack(side = "left")        
-        self.A5_ON_OFF_1 = ttk.Label(self.A5_sm_frame, text="ON" if self.alarm_activate[4] == 0 else "OFF", font=("Arial",12))
+        self.A5_ON_OFF_1 = ttk.Label(self.A5_sm_frame, style = 'black.TLabel', text="ON" if self.alarm_activate[4] == 0 else "OFF", font=("Arial",12))
         self.A5_ON_OFF_1.pack(side ="right")
-        self.A5_2_frame = tk.Frame(self.A5) 
+        self.A5_2_frame = tk.Frame(self.A5, background = 'black') 
         self.A5_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A5_time_label= ttk.Label(self.A5_2_frame, text=str(self.detail_hour[4]).zfill(2)+" : "+str(self.detail_min[4]).zfill(2), font=("Arial",16))
+        self.A5_time_label= ttk.Label(self.A5_2_frame, style = 'black.TLabel', text=str(self.detail_hour[4]).zfill(2)+" : "+str(self.detail_min[4]).zfill(2), font=("Arial",16))
         self.A5_time_label.pack(side = 'left') 
-        self.A5_week_label= ttk.Label(self.A5_2_frame, text="", font=("Arial",10))
+        self.A5_week_label= ttk.Label(self.A5_2_frame, style = 'black.TLabel', text="", font=("Arial",10))
         self.A5_week_label.pack(side = 'right')   
         self.A5_song = ttk.Label(self.A5, text="".join(self.alarm_song[4]), width = 25, background = 'white')
         self.A5_song.pack(anchor=tk.NW)
         
         #every_alarm_frame 6 
-        self.A6 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2 ) 
+        self.A6 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2, background = 'black' ) 
         self.A6.pack(side = "left")
-        self.A6_sm_frame = tk.Frame(self.A6) 
+        self.A6_sm_frame = tk.Frame(self.A6, background = 'black') 
         self.A6_sm_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A6_label = ttk.Label(self.A6_sm_frame, text = "".join(self.alarm_Name[5]), font=("Arial",10))
+        self.A6_label = ttk.Label(self.A6_sm_frame, style = 'black.TLabel', text = "".join(self.alarm_Name[5]), font=("Arial",10))
         self.A6_label.pack(side = "left")        
-        self.A6_ON_OFF_1 = ttk.Label(self.A6_sm_frame, text="ON" if self.alarm_activate[5] == 0 else "OFF", font=("Arial",12))
+        self.A6_ON_OFF_1 = ttk.Label(self.A6_sm_frame, style = 'black.TLabel', text="ON" if self.alarm_activate[5] == 0 else "OFF", font=("Arial",12))
         self.A6_ON_OFF_1.pack(side ="right")
-        self.A6_2_frame = tk.Frame(self.A6) 
+        self.A6_2_frame = tk.Frame(self.A6, background = 'black') 
         self.A6_2_frame.pack(anchor = tk.NW, fill = tk.X)
-        self.A6_time_label= ttk.Label(self.A6_2_frame, text=str(self.detail_hour[5]).zfill(2)+" : "+str(self.detail_min[5]).zfill(2), font=("Arial",16))
+        self.A6_time_label= ttk.Label(self.A6_2_frame, style = 'black.TLabel', text=str(self.detail_hour[5]).zfill(2)+" : "+str(self.detail_min[5]).zfill(2), font=("Arial",16))
         self.A6_time_label.pack(side = 'left') 
-        self.A6_week_label= ttk.Label(self.A6_2_frame, text="", font=("Arial",10))
+        self.A6_week_label= ttk.Label(self.A6_2_frame, style = 'black.TLabel', text="", font=("Arial",10))
         self.A6_week_label.pack(side = 'right')
         self.A6_song = ttk.Label(self.A6, text="".join(self.alarm_song[5]), width = 25, background = 'white')
         self.A6_song.pack(anchor=tk.NW)
         
-        self.set=ttk.Button(self.table_frame, text="設定", command=self.show_setting, width=15, style = "big.TButton")
+        self.set=tk.Button(self.table_frame, text="設定", command=self.show_setting, width=15, bg = 'black', foreground = 'white')
         self.set.pack(anchor = tk.SE, pady = (25,10), padx = (0,25))
         
         self.ring_state = 0
         self.ring_frame = tk.Frame(self.main_frame)
         self.ring_label = ttk.Label(self.ring_frame, text="", font=("Arial",16))
         self.ring_label.pack(anchor = tk.N, pady = (10,0),padx = (20,20))
-        self.ring_stop_button= ttk.Button(self.ring_frame,text="關閉",command=self.stop_music,width=8)#,bg='#FFEC8B'
+        self.ring_stop_button= ttk.Button(self.ring_frame,text="關閉",command=self.stop_music,width=8, style = "big.TButton")#,bg='#FFEC8B'
         self.ring_stop_button.pack(anchor = tk.N, pady = (20,10))
         
         self.refreshMusiclist()
@@ -454,7 +463,7 @@ class Alarm:
         #self.Alarm1.config(text=self.alarm_activate[0])
         
     def switch(self,alarm_ID):
-        self.Alarm_name_label.config(text="".join(self.alarm_Name[alarm_ID]), style = "Font.TLabelframe")
+        self.Alarm_name_label.config(text="".join(self.alarm_Name[alarm_ID]))
         self.alarm_set_hour.config(text=str(self.detail_hour[alarm_ID]).zfill(2)+" : "+str(self.detail_min[alarm_ID]).zfill(2))
         self.now_detail_alarmID = alarm_ID
         self.v.set(self.alarm_RingTime[self.now_detail_alarmID])
