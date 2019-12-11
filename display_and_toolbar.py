@@ -79,19 +79,24 @@ class Toolbar():
         self.CalendarPage = CalendarPage
         self.tool_frame=tool_frame
         
-        self.alarm_image=ImageTk.PhotoImage(Image.open('picture/alarm (1).png'))
+        self.alarm_image=ImageTk.PhotoImage(Image.open('picture/alarm.jpg'))
+        self.fm_image=ImageTk.PhotoImage(Image.open('picture/fm.jpg'))
+        self.home_image=ImageTk.PhotoImage(Image.open('picture/home.jpg'))
+        self.schedule_image=ImageTk.PhotoImage(Image.open('picture/schedule.jpg'))
+        self.music_image=ImageTk.PhotoImage(Image.open('picture/music.jpg'))
+        self.weather_image=ImageTk.PhotoImage(Image.open('picture/weatherpage.jpg'))
 
         
         #toolbar button
-        self.Main_page=tk.Button(self.root, text="MAIN", command=lambda: self.switch_page(0), width=6, height=2)
-        self.FM_page=tk.Button(self.root, text="FM", command=lambda: self.switch_page(1), width=6, height=2)
-        self.Music_page=tk.Button(self.root, text="Music", command=lambda: self.switch_page(2), width=6, height=2)
-        self.Alarm_page=tk.Button(self.root, image = self.alarm_image, command=lambda: self.switch_page(3), width=60)
-        self.Scedule_page=tk.Button(self.root, text="Scedule", command=lambda: self.switch_page(4), width=6, height=2)
-        self.Weather_page=tk.Button(self.root, text="Weather", command=lambda: self.switch_page(5), width=6, height=2)
+        self.Main_page=tk.Button(self.root, image = self.home_image, command=lambda: self.switch_page(0), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.FM_page=tk.Button(self.root, image = self.fm_image, command=lambda: self.switch_page(1), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.Music_page=tk.Button(self.root, image = self.music_image, command=lambda: self.switch_page(2), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.Alarm_page=tk.Button(self.root, image = self.alarm_image, command=lambda: self.switch_page(3), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.Scedule_page=tk.Button(self.root, image = self.schedule_image, command=lambda: self.switch_page(4), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.Weather_page=tk.Button(self.root, image = self.weather_image, command=lambda: self.switch_page(5), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
         self.Game_page=tk.Button(self.root, text="Game", command=lambda: self.switch_page(6), width=6, height=2)
         self.Setting_page=tk.Button(self.root, text="Setting", command=lambda: self.switch_page(7), width=6, height=2)
-        self.show_button=tk.Button(self.tool_frame, text="<", command=self.clickOK)
+        self.show_button=tk.Button(self.tool_frame, text="<", command=self.clickOK, bg = 'black',foreground = 'white', relief = 'flat', activebackground = 'black')
         self.test_label=tk.Label(root, text="<", font=("Arial",12))
         
         

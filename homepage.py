@@ -39,9 +39,17 @@ class Homepage():
         self.cityName_label=tk.Label(self.weather_frame, text=weather.print_city(), font=("Arial",18),background='black', foreground="white")
         self.cityName_label.pack(side = 'left', padx = (50,0))
         
+        #icon        
+        self.icon_name = self.weather.icon_name()
+        self.img=ImageTk.PhotoImage(Image.open('picture/'+self.icon_name+'.jpg'))
+        self.cityDayRainingRate_label=tk.Label(self.weather_frame, image=self.img,background='black', foreground="white")
+        self.cityDayRainingRate_label.pack(side = 'right', padx = (50,70))
+        
         #Label of city day raining rate
-        self.cityDayRainingRate_label=tk.Label(self.weather_frame, text="降雨機率\n"+weather.print_day_rain_percent(), font=("Arial",18),background='black', foreground="white")
-        self.cityDayRainingRate_label.pack(side = 'right', padx = (100,50))
+        self.cityDayRainingRate_label=tk.Label(self.weather_frame, text="濕度\n"+weather.print_day_rain_percent(), font=("Arial",18),background='black', foreground="white")
+       # self.cityDayRainingRate_label.pack(side = 'right', padx = (20,50))
+        
+        self.Ncity = ""
         
         
     def time(self):
@@ -49,8 +57,9 @@ class Homepage():
         self.date_label.config(text=time.strftime("%a %b %d %Y", time.localtime()))
         
     def refresh_weather(self):
-        self.cityName_label.config(text=self.weather.print_city())
-        self.cityDayRainingRate_label.config(text="降雨機率\n"+self.weather.print_day_rain_percent()+"%")
+        if not(self.Ncity==self.weather.print_city()):
+            self.cityName_label.config(text=self.weather.print_city())
+            self.cityDayRainingRate_label.config(text="濕度\n"+self.weather.print_day_rain_percent()+"%")
         
     def hide_homepage(self):
         self.time_frame.pack_forget()

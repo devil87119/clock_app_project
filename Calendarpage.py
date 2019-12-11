@@ -15,6 +15,7 @@ import wave
 
 set = False
 input_filepath = "event/"    
+#input_filepath = ""/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
@@ -107,7 +108,7 @@ class CalendarPage():
         self.lv= tk.StringVar()
         self.event_list_frame =  tk.Frame(self.left_frame,bg="black")
         self.event_list_frame.pack(side ="left")
-        self.event_list = tk.Listbox(self.event_list_frame,selectmode=tk.BROWSE,width=20,height=5,bg="#FFFACD",listvariable=self.lv)
+        self.event_list = tk.Listbox(self.event_list_frame,selectmode=tk.BROWSE,width=20,height=5,bg="light grey",listvariable=self.lv)
         self.event_list.pack(side="left", fill=tk.X)
         #event button
         self.event_button_frame = tk.Frame(self.left_frame,bg="black")
@@ -529,6 +530,7 @@ class CalendarPage():
       self.vMonth.set(now[1])
       tk.Label(self.calendar,text = 'Month',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
       self.omMonth = tk.OptionMenu(self.calendar,self.vMonth, *tuple(range(1,13)))
+      self.omMonth.config(bg = "black",foreground = 'white') 
       self.omMonth.grid(row = 0,column = col_idx);col_idx += 1
       # 创建年份组件
       #self.vDay = tk.StringVar()

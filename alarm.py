@@ -72,12 +72,12 @@ class Alarm:
         big_button_Style = ttk.Style ()
         big_button_Style.configure("big.TButton", font = ('Arial','10'))
         big_button_Style.map('big.TButton', foreground = [('pressed','SlateBlue3'),('active', 'black'),('!disabled','white')], background = [('pressed','red'),('active', 'red'),('!disabled','red')]) 
-        self.Alarm1=tk.Button(self.alarm_top_frame, text="Alarm 1", command=lambda: self.switch(0), width=10, bg = 'black', foreground = 'white')
-        self.Alarm2=tk.Button(self.alarm_top_frame, text="Alarm 2", command=lambda: self.switch(1), width=10, bg = 'black', foreground = 'white')
-        self.Alarm3=tk.Button(self.alarm_top_frame, text="Alarm 3", command=lambda: self.switch(2), width=10, bg = 'black', foreground = 'white')
-        self.Alarm4=tk.Button(self.alarm_low_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, bg = 'black', foreground = 'white')
-        self.Alarm5=tk.Button(self.alarm_low_frame, text="Alarm 5", command=lambda: self.switch(4), width=10, bg = 'black', foreground = 'white')
-        self.Alarm6=tk.Button(self.alarm_low_frame, text="Alarm 6", command=lambda: self.switch(5), width=10, bg = 'black', foreground = 'white')
+        self.Alarm1=tk.Button(self.alarm_top_frame, text="Alarm 1", command=lambda: self.switch(0), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm2=tk.Button(self.alarm_top_frame, text="Alarm 2", command=lambda: self.switch(1), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm3=tk.Button(self.alarm_top_frame, text="Alarm 3", command=lambda: self.switch(2), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm4=tk.Button(self.alarm_low_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm5=tk.Button(self.alarm_low_frame, text="Alarm 5", command=lambda: self.switch(4), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm6=tk.Button(self.alarm_low_frame, text="Alarm 6", command=lambda: self.switch(5), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         
         #place alarm 1~6 init        
         self.Alarm1.pack(side='left', padx=20,pady=(0,10))
@@ -135,9 +135,9 @@ class Alarm:
         #plus time
         little_button_Style = ttk.Style ()
         little_button_Style.configure("little.TButton", font = ('Sans','10'))
-        self.alarm_plus_hour = tk.Button(self.time_plus_frame, text="+", command=lambda: self.adjust_alarm(0,1), width=2, bg = 'black', foreground = 'white')
+        self.alarm_plus_hour = tk.Button(self.time_plus_frame, text="+", command=lambda: self.adjust_alarm(0,1), width=2, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.alarm_plus_hour.pack(anchor=tk.NW)
-        self.alarm_minus_hour = tk.Button(self.time_plus_frame, text="-", command=lambda: self.adjust_alarm(0,-1), width=2, bg = 'black', foreground = 'white')
+        self.alarm_minus_hour = tk.Button(self.time_plus_frame, text="-", command=lambda: self.adjust_alarm(0,-1), width=2, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.alarm_minus_hour.pack(anchor=tk.NW)                
         
         #set alarm time         
@@ -149,9 +149,9 @@ class Alarm:
         self.time_minus_frame.pack(side='left')
         
         #minus time
-        self.alarm_plus_hour = tk.Button(self.time_minus_frame, text="+", command=lambda: self.adjust_alarm(1,1), width=2, bg = 'black', foreground = 'white')
+        self.alarm_plus_hour = tk.Button(self.time_minus_frame, text="+", command=lambda: self.adjust_alarm(1,1), width=2, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.alarm_plus_hour.pack(anchor=tk.NW, padx = 0)        
-        self.alarm_minus_hour = tk.Button(self.time_minus_frame, text="-", command=lambda: self.adjust_alarm(1,-1), width=2, bg = 'black', foreground = 'white')
+        self.alarm_minus_hour = tk.Button(self.time_minus_frame, text="-", command=lambda: self.adjust_alarm(1,-1), width=2, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.alarm_minus_hour.pack(anchor=tk.NW, padx = 0)
         
         #鬧鐘持續時間
@@ -250,8 +250,8 @@ class Alarm:
         #function frame
         self.function_frame = ttk.Frame(self.right_frame, style = 'black.TFrame')        
         self.function_frame.pack(anchor=tk.NE, padx = 0, fill=tk.X)   
-        self.cancel=tk.Button(self.function_frame, text="取消離開", command=self.hide_setting, width=8, bg = 'black', foreground = 'white')
-        self.save=tk.Button(self.function_frame, text="保存", command=self.save, width=4, bg = 'black', foreground = 'white')
+        self.cancel=tk.Button(self.function_frame, text="取消離開", command=self.hide_setting, width=8, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.save=tk.Button(self.function_frame, text="保存", command=self.save, width=4, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.save.pack(side = "right")
         self.cancel.pack(side = "right")
         self.alarm_tool_label = ttk.Label(self.function_frame, text = "未修改", font=("Arial",10), style = 'black.TLabel')       
@@ -383,7 +383,7 @@ class Alarm:
         self.A6_song = ttk.Label(self.A6, text="".join(self.alarm_song[5]), width = 25, background = 'white')
         self.A6_song.pack(anchor=tk.NW)
         
-        self.set=tk.Button(self.table_frame, text="設定", command=self.show_setting, width=15, bg = 'black', foreground = 'white')
+        self.set=tk.Button(self.table_frame, text="設定", command=self.show_setting, width=15, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.set.pack(anchor = tk.SE, pady = (25,10), padx = (0,25))
         
         self.ring_state = 0
