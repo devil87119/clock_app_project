@@ -31,7 +31,7 @@ song_animation_start = 0
 class Display:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("大賢四代目")
+        self.root.title("智慧鬧鐘")
         #self.root.attributes('-type', 'dock')
         self.root_height = 322
         self.root_width = int(self.root_height/5.1*7.6)

@@ -75,17 +75,17 @@ class Alarm:
         self.Alarm1=tk.Button(self.alarm_top_frame, text="Alarm 1", command=lambda: self.switch(0), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.Alarm2=tk.Button(self.alarm_top_frame, text="Alarm 2", command=lambda: self.switch(1), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.Alarm3=tk.Button(self.alarm_top_frame, text="Alarm 3", command=lambda: self.switch(2), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
-        self.Alarm4=tk.Button(self.alarm_low_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
+        self.Alarm4=tk.Button(self.alarm_top_frame, text="Alarm 4", command=lambda: self.switch(3), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.Alarm5=tk.Button(self.alarm_low_frame, text="Alarm 5", command=lambda: self.switch(4), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         self.Alarm6=tk.Button(self.alarm_low_frame, text="Alarm 6", command=lambda: self.switch(5), width=10, bg = 'black', foreground = 'white', activebackground = 'black',highlightbackground = 'white')
         
         #place alarm 1~6 init        
-        self.Alarm1.pack(side='left', padx=20,pady=(0,10))
-        self.Alarm2.pack(side='left', padx=20,pady=(0,10))#(x=self.root_width/4*2,y = self.root_height/8*6)
-        self.Alarm3.pack(side='left', padx=20,pady=(0,10))#(x=self.root_width/4*3,y = self.root_height/8*6)
-        self.Alarm4.pack(side='left', padx=20)#(x=self.root_width/4,y = self.root_height/8*7)
-        self.Alarm5.pack(side='left', padx=20)#(x=self.root_width/4*2,y = self.root_height/8*7)
-        self.Alarm6.pack(side='left', padx=20)#(x=self.root_width/4*3,y = self.root_height/8*7)
+        self.Alarm1.pack(side='left', padx=10,pady=(10,0))
+        self.Alarm2.pack(side='left', padx=10,pady=(10,0))#(x=self.root_width/4*2,y = self.root_height/8*6)
+        self.Alarm3.pack(side='left', padx=10,pady=(10,0))#(x=self.root_width/4*3,y = self.root_height/8*6)
+        self.Alarm4.pack(side='left', padx=10,pady=(10,0))#(x=self.root_width/4,y = self.root_height/8*7)
+        #self.Alarm5.pack(side='left', padx=20)#(x=self.root_width/4*2,y = self.root_height/8*7)
+        #self.Alarm6.pack(side='left', padx=20)#(x=self.root_width/4*3,y = self.root_height/8*7)
         
         self.init_alarm()
         
@@ -264,7 +264,7 @@ class Alarm:
         
         #head_frame
         self.head_frame = tk.Frame(self.table_frame,bg = 'black') 
-        self.head_frame.pack(side = "top", pady = (25,10))
+        self.head_frame.pack(side = "top", pady = (50,30))
         
         #every_alarm_frame 1
         self.A1 = tk.Frame(self.head_frame, relief="groove" , borderwidth=2, background = 'black' ) 
@@ -345,7 +345,7 @@ class Alarm:
         
         #mid_frame
         self.ft_frame = tk.Frame(self.table_frame,bg = 'black') 
-        self.ft_frame.pack(side = "top")
+        #self.ft_frame.pack(side = "top")
         
         #every_alarm_frame 5
         self.A5 = tk.Frame(self.ft_frame, relief="groove" , borderwidth=2, background = 'black' ) 
@@ -583,9 +583,9 @@ class Alarm:
                 self.listBox.insert(tk.END, musicName)
         for i in range(self.listBox.size()):
             if(i%2==0):
-                self.listBox.itemconfig(i, bg='yellow')
+                self.listBox.itemconfig(i, bg='#AAAAAA')
             else:
-                self.listBox.itemconfig(i, bg='light goldenrod')
+                self.listBox.itemconfig(i, bg='#DDDDDD')
             #self.listBox.itemconfig(0, foreground="purple")
                 
     def change_ring(self, event):        

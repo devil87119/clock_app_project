@@ -36,7 +36,7 @@ class FMpage():
 
         #FM list
         self.m = StringVar()
-        self.FMlist= tk.Listbox(self.buttonmap,width=40,height=6,listvariable=self.m, bg = 'light grey')
+        self.FMlist= tk.Listbox(self.buttonmap,width=40,height=4,listvariable=self.m, bg = 'light grey', font=("Arial",14))
         self.FMlist.pack(side='top',fill=tk.X,pady=50,padx = 30)
         for item in range(20): 
             self.FM.FM_name_code=item
@@ -69,7 +69,7 @@ class FMpage():
     
     def show_FMpage(self):
         self.time_label.pack(anchor = tk.NE)
-        self.buttonmap.pack(side = tk.TOP,pady=(20,40))
+        self.buttonmap.pack(side = tk.TOP,pady=(20,40),padx=(5,10))
         
 
        

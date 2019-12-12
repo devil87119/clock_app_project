@@ -58,7 +58,7 @@ class MusicButtonControl(tk.Frame):
         self.pipe_image=ImageTk.PhotoImage(Image.open('picture/pipe.jpg'))
         
         self.lv= tk.StringVar()
-        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=7,bg="light grey",listvariable=self.lv)
+        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE, font=("Arial",14),width=25,height=4,bg="light grey",listvariable=self.lv)
         self.listBox.pack(side=tk.TOP)
         self.otherMusicList= otherMusicList
                                  

@@ -12,6 +12,7 @@ import os
 import time
 import pyaudio
 import wave
+from PIL import ImageTk,Image
 
 set = False
 input_filepath = "event/"    
@@ -23,6 +24,7 @@ class CalendarPage():
     def __init__(self, root,main_frame, root_height):
         #page size
         self.root = root
+        self.root.grid_columnconfigure(9, minsize=20)
         self.root_height = root_height
         self.root_width = int(self.root_height/5.1*7.6)
         self.main_frame = main_frame;
@@ -41,6 +43,8 @@ class CalendarPage():
         self.time_label=tk.Label(self.main_frame, text=time.strftime("%H:%M:%S", time.localtime()), font=("Arial",10),background='black', foreground="white")
         #self.time_label.pack(anchor=tk.NE)
         
+        self.a = tk.Frame(self.main_frame,bg="black")#, relief = "groove", borderwidth = 2)
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))
         self.calendar = tk.Frame(self.main_frame,bg="black")#, relief = "groove", borderwidth = 2)
         self.calendar.pack(side = "top", expand= True,fill = tk.BOTH)
         #creat page
@@ -98,11 +102,14 @@ class CalendarPage():
         self.event.pack(side = "left", expand= True,fill = tk.BOTH)
         
         #button frame
+        self.play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
+        self.save_image=ImageTk.PhotoImage(Image.open('picture/save.jpg'))
+        self.exit_image=ImageTk.PhotoImage(Image.open('picture/exit.jpg'))
         self.button_frame = tk.Frame(self.left_frame,bg="black")
         self.button_frame.pack(side ="top")
-        self.play = tk.Button(self.button_frame,text = "播放行程",bg='black', foreground="white",command=lambda: self.play_audio()).pack(side = 'left')
-        self.confirm = tk.Button(self.button_frame,text = "儲存",bg='black', foreground="white",command=lambda: self.save()).pack(side = 'left')
-        self.close = tk.Button(self.button_frame,text = "離開",bg='black', foreground="white",command=lambda: self.close_setting()).pack(side = 'left')
+        self.play = tk.Button(self.button_frame,image=self.play_image,text = "播放行程",bg='black', foreground="white",command=lambda: self.play_audio()).pack(side = 'left')
+        self.confirm = tk.Button(self.button_frame,image=self.save_image,text = "儲存",bg='black', foreground="white",command=lambda: self.save()).pack(side = 'left')
+        self.close = tk.Button(self.button_frame,image=self.exit_image,text = "離開",bg='black', foreground="white",command=lambda: self.close_setting()).pack(side = 'left')
 
         #event list
         self.lv= tk.StringVar()
@@ -111,9 +118,10 @@ class CalendarPage():
         self.event_list = tk.Listbox(self.event_list_frame,selectmode=tk.BROWSE,width=20,height=5,bg="light grey",listvariable=self.lv)
         self.event_list.pack(side="left", fill=tk.X)
         #event button
+        self.event_play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
         self.event_button_frame = tk.Frame(self.left_frame,bg="black")
         self.event_button_frame.pack(side ="left")
-        self.event_play_button = tk.Button(self.event_button_frame,text = "播放",bg='black', foreground="white",command=lambda: self.play_event()).pack(side = 'top')
+        self.event_play_button = tk.Button(self.event_button_frame,image=self.event_play_image,text = "播放",bg='black', foreground="white",command=lambda: self.play_event()).pack(side = 'top')
         
         
         #play AUDIO
@@ -123,12 +131,13 @@ class CalendarPage():
         self.play_success.place(x=25,y = 30)
         self.play_success_confirm =  tk.Button(self.play_success_frame,text = "結束",bg='black', foreground="white",command=lambda: self.hide_play_success()).pack(side = 'bottom')
         
-        #get AUDIO 
+        #get AUDIO
+        self.getting_audio_image=ImageTk.PhotoImage(Image.open('picture/record.jpg'))
         self.getting_frame =  tk.Frame(self.main_frame,bg="black")
         self.getting_frame.place(relx = 0.3,rely = 0.3,height = 100,width = 100)
         self.getting_audio = tk.Label(self.getting_frame,text="開始錄音",background='black', foreground="white")
         self.getting_audio.place(x=25,y = 30)
-        self.getting_audio_confirm =  tk.Button(self.getting_frame,text = "確認",bg='black', foreground="white",command=lambda: self.get_audio()).pack(side = 'bottom')
+        self.getting_audio_confirm =  tk.Button(self.getting_frame,image=self.getting_audio_image,text = "確認",bg='black', foreground="white",command=lambda: self.get_audio()).pack(side = 'bottom')
         
         #test audio
         self.test_frame = tk.Frame(self.main_frame,bg="black")
@@ -158,10 +167,12 @@ class CalendarPage():
         
     def hide_calendarpage(self):
         self.time_label.place_forget()
+        self.a.pack_forget()
         self.calendar.pack_forget()
 
     def show_calendarpage(self):
         self.time_label.place(x=self.root_width//1.15,y = self.root_height//50)
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))
         self.calendar.pack(side = "top")
    
     def hide_play_success(self):
@@ -248,7 +259,7 @@ class CalendarPage():
           row = 0
           for i in range(6):
             for j in range(7):
-              tk.Button(self.calendar,text = '',width = 7,height=2,bg='black', foreground="white").grid(row = i + 2,column = j)
+              tk.Button(self.calendar,text = '',width = 5,height=2,bg='black', foreground="white").grid(row = i + 2,column = j)
               
     def updateDate(self):
           ''' 更新日历'''        
@@ -264,7 +275,7 @@ class CalendarPage():
           for i in range(6):
             for j in range(7):
               self.calendar.grid_slaves(i +2,j)[0]['text'] = ''
-              tk.Button(self.calendar,width = 7,height = 2,bg='black', foreground="white").grid(row=i+2,column=j)
+              tk.Button(self.calendar,width = 5,height = 2,bg='black', foreground="white").grid(row=i+2,column=j)
           row=0
           for i in range(1,months[month - 1] + 1):
              tag = year*10000 + month*100 + i
@@ -280,9 +291,9 @@ class CalendarPage():
              
     def fku(self,i,row,fd,tag):
         if date[tag] == 1:
-                tk.Button(self.calendar,bg='yellow', foreground="black", command=lambda: self.open_setting(i),text= i,width = 7,height = 2).grid(row=int((i + fd - 1)//7 +2),column=int((i + fd -1)%7))
+                tk.Button(self.calendar,bg='yellow', foreground="black", command=lambda: self.open_setting(i),text= i,width = 5,height = 2).grid(row=int((i + fd - 1)//7 +2),column=int((i + fd -1)%7))
         else:
-                tk.Button(self.calendar,bg='black', foreground="white", command=lambda: self.open_setting(i),text= i,width = 7,height = 2).grid(row=int((i + fd - 1)//7 +2),column=int((i + fd -1)%7))  
+                tk.Button(self.calendar,bg='black', foreground="white", command=lambda: self.open_setting(i),text= i,width = 5,height = 2).grid(row=int((i + fd - 1)//7 +2),column=int((i + fd -1)%7))  
     
     def adjust_alarm(self, pos, num):#hour or min, +1 or -1
         if(pos == 0):
@@ -298,6 +309,7 @@ class CalendarPage():
     def open_setting(self,day):
         self.selyear = int(self.vYear.get())
         self.selmonth = int(self.vMonth.get())
+        self.a.pack_forget()
         self.calendar.pack_forget()
         dictionary = self.get_event(self.selyear,self.selmonth,day)
         self.settingPage.pack(side = "top", expand= True,fill = tk.BOTH)
@@ -312,6 +324,7 @@ class CalendarPage():
         
     def close_setting(self):
         self.settingPage.pack_forget()
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))        
         self.calendar.pack(side = "top")
         
     def cal_year(self,i):
@@ -518,20 +531,20 @@ class CalendarPage():
       # 创建年份组件
       self.vYear = tk.StringVar()
       self.vYear.set(now[0])
-      tk.Label(self.calendar,text = '年',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
-      minus_year = tk.Button(self.calendar,bg='black', foreground="white", text="-", command=lambda: self.cal_year(-1), width=2, font = ('Sans','10'))
+      minus_year = tk.Button(self.a,bg='black', foreground="white", text="-", command=lambda: self.cal_year(-1), width=2, font = ('Sans','10'))
       minus_year.grid(row = 0,column = col_idx);col_idx += 1
-      self.omYear = tk.Label(self.calendar,text=str(self.vYear.get()), font=("Arial",10),background='black', foreground="white",width = 5,height = 2)#tk.OptionMenu(self.calendar,self.vYear , *tuple(range(1998,2080)))
+      self.omYear = tk.Label(self.a,text=str(self.vYear.get()), font=("Arial",10),background='black', foreground="white",width = 5,height = 2)#tk.OptionMenu(self.calendar,self.vYear , *tuple(range(1998,2080)))
       self.omYear.grid(row = 0,column = col_idx);col_idx += 1
-      plus_year = tk.Button(self.calendar,bg='black', foreground="white", text="+", command=lambda: self.cal_year(1), width=2, font = ('Sans','10'))
+      plus_year = tk.Button(self.a,bg='black', foreground="white", text="+", command=lambda: self.cal_year(1), width=2, font = ('Sans','10'))
       plus_year.grid(row = 0,column = col_idx);col_idx += 1    
+      tk.Label(self.a,text = '年',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
       # 创建月份组件
       self.vMonth = tk.StringVar()
       self.vMonth.set(now[1])
-      tk.Label(self.calendar,text = '月',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
-      self.omMonth = tk.OptionMenu(self.calendar,self.vMonth, *tuple(range(1,13)))
+      self.omMonth = tk.OptionMenu(self.a,self.vMonth, *tuple(range(1,13)))
       self.omMonth.config(bg = "black",foreground = 'white') 
       self.omMonth.grid(row = 0,column = col_idx);col_idx += 1
+      tk.Label(self.a,text = '月',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
       # 创建年份组件
       #self.vDay = tk.StringVar()
       #self.vDay.set(now[2])
