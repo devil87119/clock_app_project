@@ -10,13 +10,14 @@ import tkinter.messagebox
 from tkinter import ttk 
 import os
 import time
+import pygame
 import pyaudio
 import wave
 from PIL import ImageTk,Image
 
 set = False
 input_filepath = "event/"    
-#input_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
+#input_filepath2 = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
@@ -341,9 +342,13 @@ class CalendarPage():
             
     def play_event(self):
         tag = self.event_list.curselection()
-        file_name = self.event_list.get(tag)      
+        file_name =input_filepath+self.event_list.get(tag)     
+        pygame.init()
+        pygame.mixer.init()
+        
         print(file_name)
-        CHUNK = 256
+        pygame.mixer.Sound(file_name).play()
+        '''CHUNK = 256
         RATE = 11025                # 采样率
         RECORD_SECONDS = 10
         path = input_filepath + file_name
@@ -368,7 +373,7 @@ class CalendarPage():
         stream.close()
          
         #close PyAudio
-        p.terminate()
+        p.terminate()'''
         
     def get_event(self,year,month,day):
         date = year*10000 + month*100 + day
@@ -398,7 +403,12 @@ class CalendarPage():
         RATE = 11025                # 采样率
         RECORD_SECONDS = 10
         print(self.file_path)
-        f = wave.open(self.file_path,"rb")
+        pygame.init()
+        pygame.mixer.init()
+        
+        print(self.file_name)
+        pygame.mixer.Sound(self.file_name).play()
+        '''f = wave.open(self.file_path,"rb")
         p = pyaudio.PyAudio()
         #open stream
         stream = p.open(format = p.get_format_from_width(f.getsampwidth()),
@@ -419,7 +429,7 @@ class CalendarPage():
         stream.close()
          
         #close PyAudio
-        p.terminate()
+        p.terminate()'''
     def play_audio(self):
         #define stream chunk 
         CHUNK = 256
@@ -450,29 +460,14 @@ class CalendarPage():
                if ( file_name == year):
                     path = input_filepath+file_name + str(hour)+".wav"
                     print(path)
+                    pygame.init()
+                    pygame.mixer.init()
+        
+                    print(path)
+                    pygame.mixer.Sound(path).play()
+                    for i in range(0, 100000):
+                        print("")
                     #open a wav format music
-                    f = wave.open(path,"rb")
-                    p = pyaudio.PyAudio()
-                    #open stream
-                    stream = p.open(format = p.get_format_from_width(f.getsampwidth()),
-                    				channels = f.getnchannels(),
-                    				rate = f.getframerate(),
-                    				output = True)
-                    #read data
-                    data = f.readframes(CHUNK)
-                     
-                    #paly stream
-                    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-                    	stream.write(data)
-                    	data = f.readframes(CHUNK)
-                     
-                    #stop stream
-                    print("stop")
-                    stream.stop_stream()
-                    stream.close()
-                     
-                    #close PyAudio
-                    p.terminate()
                print("下一個")
                point+=1
         fp.close()
