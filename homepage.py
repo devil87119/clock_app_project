@@ -35,7 +35,7 @@ class Homepage():
         self.date_label.pack(side = 'left', padx = (20,0))
         
         self.play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
-        self.message_icon = tk.Button(self.time2_frame,image=self.play_image,command=self.CalendarPage.play_daily_event, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='red' )
+        self.message_icon = tk.Button(self.time2_frame,image=self.play_image,command=self.CalendarPage.play_daily_event, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black' )
         self.message_icon.pack(side = 'left', padx = (50,0))
         #weather frame
         self.weather_frame = tk.Frame(self.main_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5

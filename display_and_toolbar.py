@@ -88,15 +88,15 @@ class Toolbar():
 
         
         #toolbar button
-        self.Main_page=tk.Button(self.root, image = self.home_image, command=lambda: self.switch_page(0), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
-        self.FM_page=tk.Button(self.root, image = self.fm_image, command=lambda: self.switch_page(1), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
-        self.Music_page=tk.Button(self.root, image = self.music_image, command=lambda: self.switch_page(2), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
-        self.Alarm_page=tk.Button(self.root, image = self.alarm_image, command=lambda: self.switch_page(3), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
-        self.Scedule_page=tk.Button(self.root, image = self.schedule_image, command=lambda: self.switch_page(4), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
-        self.Weather_page=tk.Button(self.root, image = self.weather_image, command=lambda: self.switch_page(5), width=45, bg = 'black', relief = 'flat', activebackground = 'black')
+        self.Main_page=tk.Button(self.root, image = self.home_image, command=lambda: self.switch_page(0), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.FM_page=tk.Button(self.root, image = self.fm_image, command=lambda: self.switch_page(1), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.Music_page=tk.Button(self.root, image = self.music_image, command=lambda: self.switch_page(2), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.Alarm_page=tk.Button(self.root, image = self.alarm_image, command=lambda: self.switch_page(3), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.Scedule_page=tk.Button(self.root, image = self.schedule_image, command=lambda: self.switch_page(4), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.Weather_page=tk.Button(self.root, image = self.weather_image, command=lambda: self.switch_page(5), width=45, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='black')
         self.Game_page=tk.Button(self.root, text="Game", command=lambda: self.switch_page(6), width=6, height=2)
         self.Setting_page=tk.Button(self.root, text="Setting", command=lambda: self.switch_page(7), width=6, height=2)
-        self.show_button=tk.Button(self.tool_frame, text="<", command=self.clickOK, bg = 'black',foreground = 'white', relief = 'flat', activebackground = 'black')
+        self.show_button=tk.Button(self.tool_frame, text="<", command=self.clickOK, bg = 'black',foreground = 'white', relief = 'flat', activebackground = 'black', highlightbackground='black')
         self.test_label=tk.Label(root, text="<", font=("Arial",12))
         
         
