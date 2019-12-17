@@ -555,6 +555,7 @@ class CalendarPage():
         tk.Label(self.calendar,text = week,background='black', foreground="white").grid(row = 1,column = weeks.index(week)+col) 
 
     def play_daily_event(self):
+        print(time.localtime())
         if time.localtime().tm_mon < 10:
             if time.localtime().tm_mday < 10:
                file_name = str(time.localtime().tm_year)+"0"+str(time.localtime().tm_mon)+"0"+str(time.localtime().tm_mday)
@@ -570,21 +571,26 @@ class CalendarPage():
         pygame.mixer.init()
         fp = open('event/event_init.txt', "r",encoding="utf-8")
         line = fp.readline()
+        point = 0
         while line:
                year = str(line.replace('\n',''))
                line = fp.readline()
-               print (year)
                hour = str(line.replace('\n',''))
                line = fp.readline()
-               print (hour)
                #print line
                if ( file_name == year):
                    path = input_filepath + file_name+hour+".wav"
+                   point = point +1
                    print(path)
                    pygame.mixer.Sound(path).play()
                    for i in range(150000):
                       print()
                print("end")
+        if (point == 0):
+            default = input_filepath + "default.mp3"
+            print(default)
+            pygame.mixer.music.load(default)
+            pygame.mixer.music.play()
         fp.close()
 
         

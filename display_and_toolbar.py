@@ -203,6 +203,7 @@ class Toolbar():
                     self.alarm.ring_frame.pack_forget()
                     self.switch_page(now_page)
                     self.alarm.ring_state = 0
+                    self.CalendarPage.play_daily_event()
                 start_alarm = 1
                 
             
