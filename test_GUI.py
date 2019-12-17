@@ -25,7 +25,7 @@ def Animation():
          else:
             display.toolbar.show()
         
-        display.homepage.time()
+       S display.homepage.time()
         display.homepage.refresh_weather()                     
         
         time.sleep(0.005)

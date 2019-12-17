@@ -8,9 +8,10 @@ import tkinter as tk
 from tkinter import ttk
 import time
 from weather import *
+from PIL import ImageTk,Image
 
 class Homepage():
-    def __init__(self, root, main_frame, root_height, weather):
+    def __init__(self, root, main_frame, root_height, weather, CalendarPage):
         #page size
         self.root = root
         self.root_height = root_height
@@ -18,18 +19,24 @@ class Homepage():
         self.weather = weather
         self.homepage_pos = 0
         self.main_frame=main_frame
+        self.CalendarPage = CalendarPage
         
         #time frame
         self.time_frame = tk.Frame(self.main_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5
         self.time_frame.pack(anchor = tk.N, pady=(20,0))
-            
+        
+        self.time2_frame = tk.Frame(self.time_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5
+                    
         #Label of time
         self.time_label=tk.Label(self.time_frame, text=time.strftime("%H:%M", time.localtime()), font=("Arial",100),background='black', foreground="white")#:%S
         self.time_label.pack(anchor = tk.N, padx = (0, 20))
-        self.date_label=tk.Label(self.time_frame, text=time.strftime("%a  %b %d %Y", time.localtime()), font=("Arial",15),background='black', foreground="white")
-        self.date_label.pack(anchor = tk.NW, padx = (20,0))
+        self.time2_frame.pack(anchor = tk.NW, padx=(20,0))
+        self.date_label=tk.Label(self.time2_frame, text=time.strftime("%a  %b %d %Y", time.localtime()), font=("Arial",15),background='black', foreground="white")
+        self.date_label.pack(side = 'left', padx = (20,0))
         
-        
+        self.play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
+        self.message_icon = tk.Button(self.time2_frame,image=self.play_image,command=self.CalendarPage.play_daily_event, bg = 'black', relief = 'flat', activebackground = 'black', highlightbackground='red' )
+        self.message_icon.pack(side = 'left', padx = (50,0))
         #weather frame
         self.weather_frame = tk.Frame(self.main_frame,bg = 'black')#, highlightcolor="green", highlightthickness=5
         self.weather_frame.pack(anchor = tk.S, fill = tk.X, pady = (20,0))

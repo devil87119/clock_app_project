@@ -54,14 +54,14 @@ class Display:
         self.tool_frame.config(bg = 'black')
         self.big_frame.config(bg = 'black')
         
-        self.weather = Weather("Taipei")
-        self.homepage = Homepage(self.root, self.main_frame,self.root_height,self.weather)             
+        self.weather = Weather("Taipei")        
         self.musicList = MusicList(self.root,self.main_frame,self.root_height)
         self.musicButtonControl = MusicButtonControl(self.root,self.main_frame,self.root_height,self.musicList)
         self.alarm = Alarm(self.root, self.main_frame,self.root_height,self.musicList)
         self.FMpage = FMpage(self.root, self.main_frame, self.root_height)  
         self.weather_page = weather_page(self.root, self.main_frame,self.root_height,self.weather)
         self.CalendarPage = CalendarPage(self.root, self.main_frame, self.root_height)        
+        self.homepage = Homepage(self.root, self.main_frame,self.root_height,self.weather, self.CalendarPage)     
         self.toolbar = Toolbar(self.root, self.tool_frame, self.homepage, self.alarm, self.musicButtonControl, self.FMpage, self.weather_page, self.CalendarPage, self.root_height)
     
 

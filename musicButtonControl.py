@@ -380,7 +380,7 @@ class MusicButtonControl(tk.Frame):
         
     def show_musicbuttoncontrol(self):
         self.frame1.pack(side=tk.TOP,fill = tk.X)
-        self.frame.pack(side=tk.TOP)
+        self.frame.pack(side=tk.TOP, pady = (15,0))
         self.frame0.pack(side=tk.TOP)
         self.ADD_FRAME.pack(side=tk.TOP, pady = (10,5))
         

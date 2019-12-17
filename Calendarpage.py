@@ -17,7 +17,7 @@ from PIL import ImageTk,Image
 
 set = False
 input_filepath = "event/"    
-#input_filepath2 = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
+#input_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
@@ -554,6 +554,38 @@ class CalendarPage():
       for week in weeks:
         tk.Label(self.calendar,text = week,background='black', foreground="white").grid(row = 1,column = weeks.index(week)+col) 
 
+    def play_daily_event(self):
+        if time.localtime().tm_mon < 10:
+            if time.localtime().tm_mday < 10:
+               file_name = str(time.localtime().tm_year)+"0"+str(time.localtime().tm_mon)+"0"+str(time.localtime().tm_mday)
+            else:
+               file_name = str(time.localtime().tm_year)+"0"+str(time.localtime().tm_mon)+str(time.localtime().tm_mday)  
+        else:
+            if time.localtime().tm_mday< 10:
+               file_name = str(time.localtime().tm_year)+str(time.localtime().tm_mon)+"0"+str(time.localtime().tm_mday)
+            else:
+               file_name = str(time.localtime().tm_year)+str(time.localtime().tm_mon)+str(time.localtime().tm_mday) 
+
+        pygame.init()
+        pygame.mixer.init()
+        fp = open('event/event_init.txt', "r",encoding="utf-8")
+        line = fp.readline()
+        while line:
+               year = str(line.replace('\n',''))
+               line = fp.readline()
+               print (year)
+               hour = str(line.replace('\n',''))
+               line = fp.readline()
+               print (hour)
+               #print line
+               if ( file_name == year):
+                   path = input_filepath + file_name+hour+".wav"
+                   print(path)
+                   pygame.mixer.Sound(path).play()
+                   for i in range(150000):
+                      print()
+               print("end")
+        fp.close()
 
         
         
