@@ -17,7 +17,7 @@ from PIL import ImageTk,Image
 
 set = False
 #input_filepath = "event/"    
-input_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
+inpt_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
@@ -465,8 +465,7 @@ class CalendarPage():
         
                     print(path)
                     pygame.mixer.Sound(path).play()
-                    for i in range(0, 100000):
-                        print("")
+                    time.sleep(10)
                     #open a wav format music
                print("下一個")
                point+=1
@@ -583,8 +582,7 @@ class CalendarPage():
                    point = point +1
                    print(path)
                    pygame.mixer.Sound(path).play()
-                   for i in range(150000):
-                      print()
+                   time.sleep(10)
                print("end")
         if (point == 0):
             default = input_filepath + "default.mp3"
