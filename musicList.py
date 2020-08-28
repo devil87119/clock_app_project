@@ -10,8 +10,8 @@ import pygame
 import time
 import os
 
-temp_path = "music"
-#temp_path = "/home/pi/Desktop/clock/clock_app_project-master/music"
+#temp_path = "music"
+temp_path = "/home/pi/Desktop/clock/clock_app_project-master/music"
 
 class MusicList(tk.Frame):
     def __init__(self,root,master, root_height):

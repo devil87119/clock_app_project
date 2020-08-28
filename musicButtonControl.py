@@ -58,7 +58,7 @@ class MusicButtonControl(tk.Frame):
         self.pipe_image=ImageTk.PhotoImage(Image.open('picture/pipe.jpg'))
         
         self.lv= tk.StringVar()
-        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE,width=40,height=7,bg="light grey",listvariable=self.lv)
+        self.listBox= tk.Listbox(self.m,selectmode=tk.BROWSE, font=("Arial",14),width=25,height=4,bg="light grey",listvariable=self.lv)
         self.listBox.pack(side=tk.TOP)
         self.otherMusicList= otherMusicList
                                  
@@ -83,12 +83,12 @@ class MusicButtonControl(tk.Frame):
         self.decorate_line = tk.Label(self.frame0, image = self.pipe_image, bg='black', foreground="white")
         self.decorate_line.pack(anchor = tk.N, pady = (0,5))
         #self.buttonPlay= tk.Button(self.frame,text="播放",command=self.playMusic,width=5.height=2,bg='#FFEC8B') 
-        self.buttonPlay= tk.Button(self.frame,image=self.play_image,command=self.playMusic,width=20,height=20,bg='black', foreground="white")
-        self.buttonPause= tk.Button(self.frame,image=self.pause_image,command=self.pauseMusic,width=20,height=20,bg='black', foreground="white")     
-        self.buttonStop= tk.Button(self.frame,image=self.stop_image,command=self.stopMusic,width=20,height=20,bg='black', foreground="white")    
-        self.buttonPrevious= tk.Button(self.frame,image=self.previous_image,command=self.previousMusic,width=20,height=20,bg='black', foreground="white")
-        self.buttonNext= tk.Button(self.frame,image=self.next_image,command=self.nextMusic,width=20,height=20,bg='black', foreground="white")
-        self.scalevolume= tk.Scale(self.frame0,from_=0, to=100, orient=tk.HORIZONTAL,length = 200,showvalue=1, command=self.plus,bg='black', foreground="white")                           
+        self.buttonPlay= tk.Button(self.frame,image=self.play_image,command=self.playMusic,width=20,height=20,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.buttonPause= tk.Button(self.frame,image=self.pause_image,command=self.pauseMusic,width=20,height=20,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')     
+        self.buttonStop= tk.Button(self.frame,image=self.stop_image,command=self.stopMusic,width=20,height=20,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')    
+        self.buttonPrevious= tk.Button(self.frame,image=self.previous_image,command=self.previousMusic,width=20,height=20,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.buttonNext= tk.Button(self.frame,image=self.next_image,command=self.nextMusic,width=20,height=20,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')
+        self.scalevolume= tk.Scale(self.frame0,from_=0, to=100, orient=tk.HORIZONTAL,length = 200,showvalue=1, command=self.plus,bg='black', foreground="white", relief = 'flat', activebackground = 'black', highlightbackground='black')                           
         
         self.buttonPrevious.pack(side=tk.LEFT)
         self.buttonPlay.pack(side=tk.LEFT, padx = (25,0))
@@ -380,7 +380,7 @@ class MusicButtonControl(tk.Frame):
         
     def show_musicbuttoncontrol(self):
         self.frame1.pack(side=tk.TOP,fill = tk.X)
-        self.frame.pack(side=tk.TOP)
+        self.frame.pack(side=tk.TOP, pady = (15,0))
         self.frame0.pack(side=tk.TOP)
         self.ADD_FRAME.pack(side=tk.TOP, pady = (10,5))
         

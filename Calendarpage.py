@@ -10,12 +10,14 @@ import tkinter.messagebox
 from tkinter import ttk 
 import os
 import time
+import pygame
 import pyaudio
 import wave
+from PIL import ImageTk,Image
 
 set = False
-input_filepath = "event/"    
-#input_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
+#input_filepath = "event/"    
+inpt_filepath = "/home/pi/Desktop/clock/clock_app_project-master/event/"  
 
 date = {0:0}
 
@@ -23,6 +25,7 @@ class CalendarPage():
     def __init__(self, root,main_frame, root_height):
         #page size
         self.root = root
+        self.root.grid_columnconfigure(9, minsize=20)
         self.root_height = root_height
         self.root_width = int(self.root_height/5.1*7.6)
         self.main_frame = main_frame;
@@ -42,7 +45,7 @@ class CalendarPage():
         #self.time_label.pack(anchor=tk.NE)
         
         self.a = tk.Frame(self.main_frame,bg="black")#, relief = "groove", borderwidth = 2)
-        self.a.pack(side = "top", expand= True,fill = tk.X, padx = 60)
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))
         self.calendar = tk.Frame(self.main_frame,bg="black")#, relief = "groove", borderwidth = 2)
         self.calendar.pack(side = "top", expand= True,fill = tk.BOTH)        
         
@@ -101,11 +104,14 @@ class CalendarPage():
         self.event.pack(side = "left", expand= True,fill = tk.BOTH)
         
         #button frame
+        self.play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
+        self.save_image=ImageTk.PhotoImage(Image.open('picture/save.jpg'))
+        self.exit_image=ImageTk.PhotoImage(Image.open('picture/exit.jpg'))
         self.button_frame = tk.Frame(self.left_frame,bg="black")
         self.button_frame.pack(side ="top")
-        self.play = tk.Button(self.button_frame,text = "播放行程",bg='black', foreground="white",command=lambda: self.play_audio()).pack(side = 'left')
-        self.confirm = tk.Button(self.button_frame,text = "儲存",bg='black', foreground="white",command=lambda: self.save()).pack(side = 'left')
-        self.close = tk.Button(self.button_frame,text = "離開",bg='black', foreground="white",command=lambda: self.close_setting()).pack(side = 'left')
+        self.play = tk.Button(self.button_frame,image=self.play_image,text = "播放行程",bg='black', foreground="white",command=lambda: self.play_audio()).pack(side = 'left')
+        self.confirm = tk.Button(self.button_frame,image=self.save_image,text = "儲存",bg='black', foreground="white",command=lambda: self.save()).pack(side = 'left')
+        self.close = tk.Button(self.button_frame,image=self.exit_image,text = "離開",bg='black', foreground="white",command=lambda: self.close_setting()).pack(side = 'left')
 
         #event list
         self.lv= tk.StringVar()
@@ -114,9 +120,10 @@ class CalendarPage():
         self.event_list = tk.Listbox(self.event_list_frame,selectmode=tk.BROWSE,width=20,height=5,bg="light grey",listvariable=self.lv)
         self.event_list.pack(side="left", fill=tk.X)
         #event button
+        self.event_play_image=ImageTk.PhotoImage(Image.open('picture/play.jpg'))
         self.event_button_frame = tk.Frame(self.left_frame,bg="black")
         self.event_button_frame.pack(side ="left")
-        self.event_play_button = tk.Button(self.event_button_frame,text = "播放",bg='black', foreground="white",command=lambda: self.play_event()).pack(side = 'top')
+        self.event_play_button = tk.Button(self.event_button_frame,image=self.event_play_image,text = "播放",bg='black', foreground="white",command=lambda: self.play_event()).pack(side = 'top')
         
         
         #play AUDIO
@@ -126,12 +133,13 @@ class CalendarPage():
         self.play_success.place(x=25,y = 30)
         self.play_success_confirm =  tk.Button(self.play_success_frame,text = "結束",bg='black', foreground="white",command=lambda: self.hide_play_success()).pack(side = 'bottom')
         
-        #get AUDIO 
+        #get AUDIO
+        self.getting_audio_image=ImageTk.PhotoImage(Image.open('picture/record.jpg'))
         self.getting_frame =  tk.Frame(self.main_frame,bg="black")
         self.getting_frame.place(relx = 0.3,rely = 0.3,height = 100,width = 100)
         self.getting_audio = tk.Label(self.getting_frame,text="開始錄音",background='black', foreground="white")
         self.getting_audio.place(x=25,y = 30)
-        self.getting_audio_confirm =  tk.Button(self.getting_frame,text = "確認",bg='black', foreground="white",command=lambda: self.get_audio()).pack(side = 'bottom')
+        self.getting_audio_confirm =  tk.Button(self.getting_frame,image=self.getting_audio_image,text = "確認",bg='black', foreground="white",command=lambda: self.get_audio()).pack(side = 'bottom')
         
         #test audio
         self.test_frame = tk.Frame(self.main_frame,bg="black")
@@ -161,10 +169,12 @@ class CalendarPage():
         
     def hide_calendarpage(self):
         self.time_label.place_forget()
+        self.a.pack_forget()
         self.calendar.pack_forget()
 
     def show_calendarpage(self):
         self.time_label.place(x=self.root_width//1.15,y = self.root_height//50)
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))
         self.calendar.pack(side = "top")
    
     def hide_play_success(self):
@@ -301,6 +311,7 @@ class CalendarPage():
     def open_setting(self,day):
         self.selyear = int(self.vYear.get())
         self.selmonth = int(self.vMonth.get())
+        self.a.pack_forget()
         self.calendar.pack_forget()
         dictionary = self.get_event(self.selyear,self.selmonth,day)
         self.settingPage.pack(side = "top", expand= True,fill = tk.BOTH)
@@ -315,6 +326,7 @@ class CalendarPage():
         
     def close_setting(self):
         self.settingPage.pack_forget()
+        self.a.pack(side = "top", expand= True,fill = tk.X,padx = (50,0))        
         self.calendar.pack(side = "top")
         
     def cal_year(self,i):
@@ -331,9 +343,13 @@ class CalendarPage():
             
     def play_event(self):
         tag = self.event_list.curselection()
-        file_name = self.event_list.get(tag)      
+        file_name =input_filepath+self.event_list.get(tag)     
+        pygame.init()
+        pygame.mixer.init()
+        
         print(file_name)
-        CHUNK = 256
+        pygame.mixer.Sound(file_name).play()
+        '''CHUNK = 256
         RATE = 11025                # 采样率
         RECORD_SECONDS = 10
         path = input_filepath + file_name
@@ -358,7 +374,7 @@ class CalendarPage():
         stream.close()
          
         #close PyAudio
-        p.terminate()
+        p.terminate()'''
         
     def get_event(self,year,month,day):
         date = year*10000 + month*100 + day
@@ -388,7 +404,12 @@ class CalendarPage():
         RATE = 11025                # 采样率
         RECORD_SECONDS = 10
         print(self.file_path)
-        f = wave.open(self.file_path,"rb")
+        pygame.init()
+        pygame.mixer.init()
+        
+        print(self.file_name)
+        pygame.mixer.Sound(self.file_name).play()
+        '''f = wave.open(self.file_path,"rb")
         p = pyaudio.PyAudio()
         #open stream
         stream = p.open(format = p.get_format_from_width(f.getsampwidth()),
@@ -409,7 +430,7 @@ class CalendarPage():
         stream.close()
          
         #close PyAudio
-        p.terminate()
+        p.terminate()'''
     def play_audio(self):
         #define stream chunk 
         CHUNK = 256
@@ -440,29 +461,13 @@ class CalendarPage():
                if ( file_name == year):
                     path = input_filepath+file_name + str(hour)+".wav"
                     print(path)
+                    pygame.init()
+                    pygame.mixer.init()
+        
+                    print(path)
+                    pygame.mixer.Sound(path).play()
+                    time.sleep(10)
                     #open a wav format music
-                    f = wave.open(path,"rb")
-                    p = pyaudio.PyAudio()
-                    #open stream
-                    stream = p.open(format = p.get_format_from_width(f.getsampwidth()),
-                    				channels = f.getnchannels(),
-                    				rate = f.getframerate(),
-                    				output = True)
-                    #read data
-                    data = f.readframes(CHUNK)
-                     
-                    #paly stream
-                    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-                    	stream.write(data)
-                    	data = f.readframes(CHUNK)
-                     
-                    #stop stream
-                    print("stop")
-                    stream.stop_stream()
-                    stream.close()
-                     
-                    #close PyAudio
-                    p.terminate()
                print("下一個")
                point+=1
         fp.close()
@@ -528,7 +533,7 @@ class CalendarPage():
       plus_year = tk.Button(self.a,bg='black', foreground="white", text="+", command=lambda: self.cal_year(1), width=2, font = ('Sans','10'))
       plus_year.grid(row = 0,column = col_idx);col_idx += 1    
       tk.Label(self.a,text = '年',width = 5,height = 2,background='black', foreground="white").grid(row = 0,column = col_idx);col_idx += 1
-      
+
       # 创建月份组件
       self.vMonth = tk.StringVar()
       self.vMonth.set(now[1])
@@ -549,7 +554,43 @@ class CalendarPage():
       col = 0
       for week in weeks:
         tk.Label(self.calendar,text = week,background='black', foreground="white").grid(row = 1,column = weeks.index(week)+col) 
-      
+    def play_daily_event(self):
+        print(time.localtime())
+        if time.localtime().tm_mon < 10:
+            if time.localtime().tm_mday < 10:
+               file_name = str(time.localtime().tm_year)+"0"+str(time.localtime().tm_mon)+"0"+str(time.localtime().tm_mday)
+            else:
+               file_name = str(time.localtime().tm_year)+"0"+str(time.localtime().tm_mon)+str(time.localtime().tm_mday)  
+        else:
+            if time.localtime().tm_mday< 10:
+               file_name = str(time.localtime().tm_year)+str(time.localtime().tm_mon)+"0"+str(time.localtime().tm_mday)
+            else:
+               file_name = str(time.localtime().tm_year)+str(time.localtime().tm_mon)+str(time.localtime().tm_mday) 
+
+        pygame.init()
+        pygame.mixer.init()
+        fp = open('event/event_init.txt', "r",encoding="utf-8")
+        line = fp.readline()
+        point = 0
+        while line:
+               year = str(line.replace('\n',''))
+               line = fp.readline()
+               hour = str(line.replace('\n',''))
+               line = fp.readline()
+               #print line
+               if ( file_name == year):
+                   path = input_filepath + file_name+hour+".wav"
+                   point = point +1
+                   print(path)
+                   pygame.mixer.Sound(path).play()
+                   time.sleep(10)
+               print("end")
+        if (point == 0):
+            default = input_filepath + "default.mp3"
+            print(default)
+            pygame.mixer.music.load(default)
+            pygame.mixer.music.play()
+        fp.close()
 
         
         

@@ -54,7 +54,7 @@ class weather_page:
         self.detail_frame = tk.Frame(self.weather_frame,width=self.root_width/2,height=self.root_height, relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
         self.detail_frame.place(relx=0.5, rely=0.1, relwidth=0.9, relheight=0.1, anchor='n')
         self.detail_frame2 = tk.Frame(self.weather_frame,width=100,height=self.root_height,relief="groove", borderwidth = 2,bg="black")#, highlightcolor="green", highlightthickness=5
-        self.detail_frame2.place(relx=0.5, rely=0.19, relwidth=0.9, relheight=0.6, anchor='n')
+        self.detail_frame2.place(relx=0.5, rely=0.19, relwidth=0.9, relheight=0.65, anchor='n')
         
         self.city_dic={ "基隆市" : "Keelung", "臺北市" : "Taipei", "新北市" : "New Taipei", 
                "桃園市" : "Taoyuan", "新竹市" : "Hsinchu", "新竹縣" : "Hsinchu",
@@ -87,9 +87,12 @@ class weather_page:
         self.city_set.place(relx=0.7, relheight=1.0, relwidth=0.3)
         
         self.var = ""
-        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',14),width=30,height=10,background='black', foreground="white")
+        
+    
+        
+        self.the_weather_detail=tk.Label(self.detail_frame2,text=self.var,font=('Arial',14),height=10,background='black', foreground="white")
         #self.weather_detail.place(x=360,y=61)
-        self.the_weather_detail.pack(side="left")
+        self.the_weather_detail.pack(side="left",padx=20)
         
         self.choose_the_city = True
         
@@ -120,17 +123,14 @@ class weather_page:
             self.the_weather_detail.config(text = self.city_list.get()+"\n\n"+
                "天氣概況:"+self.trans_to_ch(self.weather.print_weather_description()['weather'][0]['description'])+"\n"+
                "溫度:"+str(self.weather.print_weather_description()['main']['temp_min'])+"~"+str(self.weather.print_weather_description()['main']['temp_max'])+"℃"+"\n"+
-               "濕度:"+str(self.weather.print_weather_description()['main']['humidity'])
+               "濕度:"+str(self.weather.print_weather_description()['main']['humidity'])+"%"
                 )
+            
             #icon
-            self.weather_icon = tk.Canvas(self.detail_frame2, bg="white", bd=0, highlightthickness=0)
             self.icon_name = self.weather.icon_name2()
-            self.size = int(self.detail_frame2.winfo_height())
-            print(self.icon_name+"\n"+str(self.size))
-            self.img = ImageTk.PhotoImage(Image.open('picture/'+self.icon_name+'.png'))
-            self.weather_icon.delete("all")
-            self.weather_icon.create_image(0,0, anchor='nw', image=self.img)
-            self.weather_icon.place(relx=.75, rely=0.2, relwidth=0.15, relheight=0.4)
+            self.img = ImageTk.PhotoImage(Image.open('picture/'+self.icon_name+'.jpg'))
+            self.weather_icon_label=tk.Label(self.detail_frame2, image=self.img,background='black', foreground="white")
+            self.weather_icon_label.place(x=260,y=70)
             self.choose_the_city=False
         else:
            self.the_weather_detail.config(text = "請選擇城市!")
